@@ -12,28 +12,77 @@
     <link href="css/custom.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+<!--Titre et description de la dv-->
 <div class="jumbotron">
+    <h1 style="color: white">Fais ton film</h1>
+    <p style="color: white">Je suis une descriptionJe suis une descriptionJe suis une descriptionJe suis une
+        descriptionJe suis une description</p>
+</div>
+
+<!--Dataviz-->
+<div class="jumbotron">
+    <!--Jauge, SVG, Selecteurs-->
+
     <div class="row">
+
+        <!--Jauge-->
+        <div style="background-color: #9fcdff" class="col-1">
+            <img src="img/jauge.png">
+        </div>
+
+        <!--SVG-->
         <div class="col-6">
             <div class="affiche">
                 <svg width="640" height="833"></svg>
             </div>
         </div>
-        <div class="col-6">
-            <input type=text list=browsers>
-            <datalist id=browsers>
-                <option value="tarantino"> Tarantino</option>
-                <option value="bay"> Bay</option>
-                <option value="Cameron"> Cameron</option>
-            </datalist>
+
+                <!--Selecteur-->
+        <div style="background-color: #f4cdcf" class="col-5">
+
+            <!--Lieux-->
+            <div style="margin-top: 20px" class="jumbotron">
+                <h2 style="color: white">Lieux/Environnements</h2>
+            </div>
+
+            <!--Acteurs-->
+            <div class="jumbotron"><h2 style="color: white">Acteurs</h2>
+                <!--Combobox-->
+                <input type=text list=actor>
+                <datalist id=actor>
+                    <option value="freeman"> Morgan Freeman</option>
+                    <option value="ross"> Bob Ross</option>
+                    <option value="murray"> Bill Murray</option>
+                </datalist>
+            </div>
+
+            <!--Réalisateur-->
+            <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
+                <!--Combobox-->
+                <input type=text list=director>
+                <datalist id=director>
+                    <option value="tarantino"> Tarantino</option>
+                    <option value="bay"> Bay</option>
+                    <option value="Cameron"> Cameron</option>
+                </datalist>
+                <!--Preview-->
+                <svg style="margin-top: 10px" width="500" height="120"></svg>
+
+            </div>
+
+            <!--Titre-->
+            <div class="jumbotron">
+                <h2 style="color: white">Titre</h2>
+                <input type="text" value="Mon titre personnalisé"><br>
+                <input type="text" value="Mon titre mashup" disabled="disabled">
+
+            </div>
         </div>
     </div>
 </div>
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src='js/bootstrap.css'></script>
 <script src='js/bootstrap.bundle.css'></script>
-
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'>
     //import données depuis gsheet
