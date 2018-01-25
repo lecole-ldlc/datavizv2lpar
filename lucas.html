@@ -1,13 +1,110 @@
-<select name="Lieux" id="Lieux" onchange="setImage(this);">
-  <option value="https://lh3.google.com/u/0/d/1hfymxsd8jCt1jAY-EeN5WKEg7TQDQbJ8=w1920-h949-iv1">Alien</option>
-  <option value="https://lh3.google.com/u/0/d/1vJc9_d0l7odolxuKH4TmRBUUKtvNkRLR=w1920-h949-iv1">Avatar</option>
-  <option value="https://lh3.google.com/u/0/d/17OTlToCmC-G4rWrQ-URioZNZXdG-afyv=w1920-h600-iv1">Matrix</option>
-</select><br />
-<img src="" name="image-swap" />
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Generate SVG</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script type='text/javascript'></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+        svg {
+            margin-top: 10px;
+            border: 1px black solid;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-4">
+        <select id="places" name="name-list">
+
+        </select>
+    </div>
+    <div class="col-4">
+        <button id="place_direct" class="btn btn-primary">Valider</button>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-10">
+        <svg id="svg" width="600" height="880">
+        </svg>
+    </div>
+</div>
 <script>
-function setImage(select){
-  var image = document.getElementsByName("image-swap")[0];
-  image.src = select.options[select.selectedIndex].value;
-}
+    function SVG(tag) {
+        return document.createElementNS('http://www.w3.org/2000/svg', tag);
+    }
+    var font = "Arial";
+    //import données depuis gsheet
+    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
+
+    function init() {
+        Tabletop.init({
+            key: publicSpreadsheetUrl,
+            callback: showInfo,
+            simpleSheet: true
+        })
+    }
+
+    function showInfo(data, tabletop) {
+        console.log('Successfully processed!')
+        console.log(data);
+
+
+        var places = [];
+        data.forEach(function (d) {
+            if (d["type"] == "places") {
+                places.push(d);
+            }
+        });
+
+        var dropDown = d3.select("#places");
+
+        var options = dropDown.selectAll("option")
+            .data(places)
+            .enter()
+            .append("option")
+            .text(function (d) {
+                return d.elements;
+            })
+            .attr("value", function (d) {
+                return d.elements;
+
+            });
+        console.log(options);
+
+        $("#director-list").on("change", function (e) {
+            console.log($(this).val());
+
+        });
+
+        $("#place_direct").click(function () {
+            var txt = $("#places").val();
+            $("#svg").html("");
+            var font = "sans-serif"
+            d3.select("svg").append("text")
+                .attr("x", 100)
+                .attr("y", 100)
+                .text(txt)
+                .attr("font-family", font)
+                .attr("font-size", "30px")
+        });
+
+    }
+    window.addEventListener('DOMContentLoaded', init);
 </script>
-</p>
+</body>
+</html>
