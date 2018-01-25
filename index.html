@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,30 +12,129 @@
     <link href="css/custom.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+<!--Titre et description de la dv-->
 <div class="jumbotron">
+    <h1 style="color: white">Fais ton film</h1>
+    <p style="color: white">Je suis une descriptionJe suis une descriptionJe suis une descriptionJe suis une
+        descriptionJe suis une description</p>
+</div>
+
+<!--Dataviz-->
+<div class="jumbotron">
+    <!--Jauge, SVG, Selecteurs-->
+
     <div class="row">
-        <div class="col-6">
+
+        <!--Jauge-->
+        <div style="background-color: #9fcdff" class="col-1">
+            <img src="img/jauge.png">
+        </div>
+
+        <!--SVG-->
+        <div STYLE="background-color: #f1f0f4" class="col-6">
             <div class="affiche">
-                <svg width="640" height="833"></svg>
+                <svg width="640" height="833" id="svg" ></svg>
             </div>
         </div>
-        <div class="col-6">
-            <input type=text list=browsers>
-            <datalist id=browsers>
-                <option value="tarantino"> Tarantino</option>
-                <option value="bay"> Bay</option>
-                <option value="Cameron"> Cameron</option>
-            </datalist>
+
+        <!--Selecteur-->
+        <div style="background-color: #f4cdcf" class="col-5">
+
+            <!--Lieux-->
+            <div style="margin-top: 20px" class="jumbotron">
+                <h2 style="color: white">Lieux/Environnements</h2>
+            </div>
+
+            <!--Acteur1-->
+            <div class="jumbotron"><h2 style="color: white">Acteurs</h2>
+            </div>
+
+            <!--Acteur2-->
+            <div class="jumbotron"><h2 style="color: white">Acteurs</h2>
+            </div>
+
+            <!--Réalisateur-->
+            <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
+
+                <!--Preview-->
+                <svg width="500" height="120" id="preview">
+                </svg>
+
+            </div>
+
+            <!--Titre-->
+            <div class="jumbotron">
+                <h2 style="color: white">Titre</h2>
+        <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
+                <button id="place_text" class="btn btn-primary">Go</button>
+                <h3 style="color: white">
+ou</h3>
+                <input type="text" value="Mon titre mashup" disabled="disabled">
+                <button>refresh</button>
+
+            </div>
+
+            <!--Génération-->
+            <div class="jumbotron">
+
+                <!--Bouton-->
+                <button id="myBtn">Open Modal</button>
+                <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="row">
+                            <div class="col-6">
+                                <svg id="svg"></svg>
+                            </div>
+                            <div class="col-6">
+                                <div class="jumbotron">
+                                    <h2>Voilà ! Ton affiche est prête !</h2>
+                                    <div class="row">
+                                    <div class="col-6">
+                                        <svg width="150px">85%</svg>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Texte sur variable</p>
+                                    </div>
+                                        </div>
+                                </div>
+                                <div class="jumbotron">
+                                    <h2>
+                                        Tu veux en faire quoi maintenant ?
+                                    </h2>
+                                    <p>partager</p>
+                                    <p>téléverser</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Synopsis-->
+            <div class="jumbotron">
+                <h2 style="color: white">Synopsis
+                    <button>lets go</button>
+                </h2>
+            </div>
         </div>
     </div>
 </div>
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src='js/bootstrap.css'></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/custom_title.js"></script>
 <script src='js/bootstrap.bundle.css'></script>
-
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'>
+
+</script>
+
+<script>
     //import données depuis gsheet
     var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
@@ -50,13 +149,37 @@
     function showInfo(data, tabletop) {
         alert('Successfully processed!')
         console.log(data);
+
     }
 
     window.addEventListener('DOMContentLoaded', init)
 </script>
 <script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
 
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
 
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 </body>
 </html>
