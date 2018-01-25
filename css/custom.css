@@ -50,3 +50,8 @@ h2 {
     text-decoration: none;
     cursor: pointer;
 }
+
+svg {
+                border: 1px black solid;
+
+}

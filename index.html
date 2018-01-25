@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +33,7 @@
         <!--SVG-->
         <div STYLE="background-color: #f1f0f4" class="col-6">
             <div class="affiche">
-                <svg width="640" height="833" id="tbd" ></svg>
+                <svg width="640" height="833" id="svg" ></svg>
             </div>
         </div>
 
@@ -57,15 +57,18 @@
             <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
 
                 <!--Preview-->
-                <svg width="500" height="120"></svg>
+                <svg width="500" height="120" id="preview">
+                </svg>
 
             </div>
 
             <!--Titre-->
             <div class="jumbotron">
                 <h2 style="color: white">Titre</h2>
-                <input type="text" value="Mon titre personnalisé"><br>
-                <h3 style="color: white;">ou</h3>
+        <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
+                <button id="place_text" class="btn btn-primary">Go</button>
+                <h3 style="color: white">
+ou</h3>
                 <input type="text" value="Mon titre mashup" disabled="disabled">
                 <button>refresh</button>
 
@@ -83,7 +86,7 @@
                         <span class="close">&times;</span>
                         <div class="row">
                             <div class="col-6">
-                                <svg id="tbd"></svg>
+                                <svg id="svg"></svg>
                             </div>
                             <div class="col-6">
                                 <div class="jumbotron">
@@ -123,11 +126,14 @@
 </div>
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src='js/bootstrap.css'></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/custom_title.js"></script>
 <script src='js/bootstrap.bundle.css'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'>
 
 </script>
+
 <script>
     //import données depuis gsheet
     var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
