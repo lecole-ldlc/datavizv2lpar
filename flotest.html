@@ -79,13 +79,12 @@
 
         $(function () {
             $("#place_direct").click(function () {
-                var txt = $("#directors").val();
-                console.log(txt);
+                var txt = $("#d.elements")
                 $("#svg").html("");
                 var font = "sans-serif"
                 d3.select("svg").append("text")
-                    .attr("x", 100 + Math.random() * 100)
-                    .attr("y", 100 + Math.random() * 100)
+                    .attr("x", 100)
+                    .attr("y", 100)
                     .text(txt)
                     .attr("font-family", font)
                     .attr("font-size", "30px")
