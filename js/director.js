@@ -40,11 +40,6 @@ function SVG(tag) {
             });
         console.log(options);
 
-        $("#director-list").on("change", function (e) {
-            console.log($(this).val());
-
-        });
-
         $("#place_direct").click(function () {
             var txt = $("#directors").val();
             $("#svg").html("");
