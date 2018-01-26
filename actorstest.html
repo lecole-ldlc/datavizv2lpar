@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Generate SVG</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script type='text/javascript'></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+        svg {
+            margin-top: 10px;
+            border: 1px black solid;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-4">
+        <select class="actor" id="actors" name="name-list">
+        </select>
+        <select class="actor" id="actors2" name="name-list">
+        </select>
+
+    </div>
+    <div class="col-4">
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-2">
+        <button type="button" class="wheel" id="wheel">Rotate</button>
+        <button type="button" class="Big" id="big">Big</button>
+        <button type="button" class="small" id="small">Small</button>
+
+        <button type="button" class="wheel" id="wheel2">Rotate2</button>
+        <button type="button" class="big" id="big2">Big2</button>
+        <button type="button" class="small" id="small2">Small2</button>
+        <svg id="svg" width="600" height="880">
+        </svg>
+    </div>
+</div>
+<script>
+    function SVG(tag) {
+        return document.createElementNS('http://www.w3.org/2000/svg', tag);
+    }
+    var font = "Arial";
+    //import données depuis gsheet
+    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
+
+    function init() {
+        Tabletop.init({
+            key: publicSpreadsheetUrl,
+            callback: showInfo,
+            simpleSheet: true
+        })
+    }
+
+
+    function showInfo(data, tabletop) {
+        console.log('Successfully processed!');
+        console.log(data);
+
+
+        var actors = [];
+        data.forEach(function (d) {
+            if (d["type"] == "actors") {
+                actors.push(d);
+            }
+        });
+
+        var dropDown = d3.select("#actors");
+
+        var options = dropDown.selectAll("option")
+            .data(actors)
+            .enter()
+            .append("option")
+            .text(function (d) {
+                return d.elements;
+            })
+            .attr("value", function (d) {
+                return d.actorsimages;
+
+            });
+        console.log(options);
+
+        var dropDown2 = d3.select("#actors2");
+
+        var options2 = dropDown2.selectAll("option")
+            .data(actors)
+            .enter()
+            .append("option")
+            .text(function (d) {
+                return d.elements;
+            })
+            .attr("value", function (d) {
+                return d.actorsimages;
+
+            });
+
+
+        $(".actor").on("change", function () {
+            var img = $(this).val();
+            console.log(img);
+            imageAnimation.init(0, "#svg", img);
+            /*d3.select("svg").append("svg:image")
+             .attr("xlink:href", img)
+             .attr("x", "0")
+             .attr("y", "0")
+             .attr("width", "640")
+             .attr("height", "833");
+             */
+            d3.select("svg").append("text")
+                .attr("x", 100)
+                .attr("y", 100)
+                .text("lol")
+                .attr("font-family", "Arial")
+                .attr("font-size", "30px")
+        });
+
+    }
+    var imageAnimation = new function () {
+
+        var instances = {};
+        this.init = function (id, baseId, img) {
+            console.log("init", img);
+            instances[id] = new ImageAnimation(baseId, img);
+        };
+        function ImageAnimation(id, img) {
+            var drag, dgrop;
+
+
+            drag = d3.drag()
+                .on("drag", function (d, i) {
+                    d.x += d3.event.dx;
+                    d.y += d3.event.dy;
+                    d3.select(this).attr("transform", function (d, i) {
+                        return "translate(" + [d.x, d.y] + "),rotate(" + d.r + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
+                    })
+                });
+
+            console.log("append g", id);
+
+
+            dgrop = d3.select(id).append("g")
+                .data([{"x": 20, "y": 20, "r": 1, "scale": 1}])
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("transform", "translate(0,0)")
+                .append('image')
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 300)
+                .attr("height", 300)
+                .attr("xlink:href", img)
+                .call(drag);
+
+            $(".wheel").bind("click", function () {
+                dgrop.attr("transform", function (d, i) {
+                    d.r = d.r - 30;
+                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " ,160, 160),scale(" + d.scale + "," + d.scale + ")";
+                });
+            });
+
+            $(".big").bind("click", function () {
+                dgrop.attr("transform", function (d, i) {
+                    d.scale = d.scale * 1.2;
+                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+                });
+            });
+
+            $(".small").bind("click", function () {
+                dgrop.attr("transform", function (d, i) {
+                    d.scale = d.scale * 0.8;
+                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+                });
+            });
+        }
+
+    };
+
+    window.addEventListener('DOMContentLoaded', init);
+</script>
+</body
+>
+</html>
+
