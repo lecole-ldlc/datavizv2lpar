@@ -81,7 +81,7 @@
                 return d.elements;
             })
             .attr("value", function (d) {
-                return d.elements;
+                return d.images_url;
 
             });
         console.log(options);
@@ -91,15 +91,21 @@
 
         });
 
-        $("#place_direct").click(function () {
-            var txt = $("#places").val();
-            $("#svg").html("");
-            var font = "sans-serif"
+        $("#places").on("change", function () {
+            var img = $("#places").val()    ;
+            console.log(img);
+            d3.select("svg").append("svg:image")
+                .attr("xlink:href", img)
+                .attr("x", "0")
+                .attr("y", "0")
+                .attr("width", "640")
+                .attr("height", "833");
+
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
-                .text(txt)
-                .attr("font-family", font)
+                .text("TITRE DU FILM")
+                .attr("font-family", "Arial")
                 .attr("font-size", "30px")
         });
 
