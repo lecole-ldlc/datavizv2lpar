@@ -65,8 +65,8 @@
             var txt = $("#directors").val();
             var font = "sans-serif"
             d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
+                .attr("x", 1000)
+                .attr("y", 1000)
                 .text(txt)
                 .attr("font-family", font)
                 .attr("font-size", "30px")
