@@ -26,7 +26,7 @@
     <div class="col-2">
     </div>
     <div class="col-4">
-        <select id="directors" name="name-list">
+        <select id="places" name="name-list">
 
         </select>
     </div>
@@ -64,45 +64,48 @@
         console.log(data);
 
 
-        var directors = [];
+        var places = [];
         data.forEach(function (d) {
-            if (d["type"] == "directors") {
-                directors.push(d);
+            if (d["type"] == "places") {
+                places.push(d);
             }
         });
 
-        var dropDown = d3.select("#directors");
+        var dropDown = d3.select("#places");
 
         var options = dropDown.selectAll("option")
-            .data(directors)
+            .data(places)
             .enter()
             .append("option")
             .text(function (d) {
                 return d.elements;
             })
             .attr("value", function (d) {
-                return d.elements;
+                return d.images_url;
 
             });
         console.log(options);
 
-        $("#directors").on("change", function (e) {
-
+        $("#director-list").on("change", function (e) {
             console.log($(this).val());
-          var fonttitle = d.fonts;
-
 
         });
 
-        $("#place_direct").click(function () {
-            var txt = $("#directors").val();
-            $("#svg").html("");
-            var font = "sans-serif"
+        $("#places").on("change", function () {
+            var img = $("#places").val()    ;
+            console.log(img);
+            d3.select("svg").append("svg:image")
+                .attr("xlink:href", img)
+                .attr("x", "0")
+                .attr("y", "0")
+                .attr("width", "640")
+                .attr("height", "833");
+
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
-                .text(txt)
-                .attr("font-family", font)
+                .text("TITRE DU FILM")
+                .attr("font-family", "Arial")
                 .attr("font-size", "30px")
         });
 
@@ -111,3 +114,4 @@
 </script>
 </body>
 </html>
+
