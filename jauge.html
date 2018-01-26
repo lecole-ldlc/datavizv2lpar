@@ -35,13 +35,9 @@ var svg = d3.select("body").append("svg")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // get the data
-d3.csv("test jauge.csv", function(error, data) {
+d3.csv("testjauge.csv", function(error, data) {
   if (error) throw error;
 
-  // format the data
-  data.forEach(function(d) {
-    d.Scorejauge = +d.Scorejauge;
-  });
 
   // Scale the range of the data in the domains
   x.domain(data.map(function(d) { return d.Acteurs; }));
