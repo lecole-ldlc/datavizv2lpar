@@ -26,9 +26,12 @@
     <div class="col-2">
     </div>
     <div class="col-4">
-        <select class="actor" id="actors" name="name-list">
+        <select class="actor" data-number="1" id="actors" name="name-list">
+            <option value="">... Select actor</option>
         </select>
-        <select class="actor" id="actors2" name="name-list">
+        <select class="actor" data-number="2" id="actors2" name="name-list">
+            <option value="">... Select actor</option>
+
         </select>
 
     </div>
@@ -41,13 +44,13 @@
     <div class="col-2">
     </div>
     <div class="col-2">
-        <button type="button" class="wheel" id="wheel">Rotate</button>
-        <button type="button" class="Big" id="big">Big</button>
-        <button type="button" class="small" id="small">Small</button>
+        <button type="button" id="wheel1">Rotate</button>
+        <button type="button" id="big1">Big</button>
+        <button type="button" id="small1">Small</button>
 
-        <button type="button" class="wheel" id="wheel2">Rotate2</button>
-        <button type="button" class="big" id="big2">Big2</button>
-        <button type="button" class="small" id="small2">Small2</button>
+        <button type="button" id="wheel2">Rotate2</button>
+        <button type="button" id="big2">Big2</button>
+        <button type="button" id="small2">Small2</button>
         <svg id="svg" width="600" height="880">
         </svg>
     </div>
@@ -113,8 +116,9 @@
 
         $(".actor").on("change", function () {
             var img = $(this).val();
-            console.log(img);
-            imageAnimation.init(0, "#svg", img);
+            var num = $(this).attr("data-number");
+            console.log(img, num);
+            imageAnimation.init(0, "#svg", img, num);
             /*d3.select("svg").append("svg:image")
              .attr("xlink:href", img)
              .attr("x", "0")
@@ -134,13 +138,14 @@
     var imageAnimation = new function () {
 
         var instances = {};
-        this.init = function (id, baseId, img) {
+        this.init = function (id, baseId, img, num) {
             console.log("init", img);
-            instances[id] = new ImageAnimation(baseId, img);
+            instances[id] = new ImageAnimation(baseId, img, num);
         };
-        function ImageAnimation(id, img) {
+        function ImageAnimation(id, img, num) {
             var drag, dgrop;
 
+            $("#actor" + num).remove();
 
             drag = d3.drag()
                 .on("drag", function (d, i) {
@@ -161,27 +166,28 @@
                 .attr("transform", "translate(0,0)")
                 .append('image')
                 .attr("x", 0)
+                .attr("id", "actor" + num)
                 .attr("y", 0)
                 .attr("width", 300)
                 .attr("height", 300)
                 .attr("xlink:href", img)
                 .call(drag);
 
-            $(".wheel").bind("click", function () {
+            $("#wheel" + num).bind("click", function () {
                 dgrop.attr("transform", function (d, i) {
                     d.r = d.r - 30;
                     return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " ,160, 160),scale(" + d.scale + "," + d.scale + ")";
                 });
             });
 
-            $(".big").bind("click", function () {
+            $("#big" + num).bind("click", function () {
                 dgrop.attr("transform", function (d, i) {
                     d.scale = d.scale * 1.2;
                     return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
                 });
             });
 
-            $(".small").bind("click", function () {
+            $("#small" + num).bind("click", function () {
                 dgrop.attr("transform", function (d, i) {
                     d.scale = d.scale * 0.8;
                     return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
