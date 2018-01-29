@@ -37,6 +37,9 @@
             .attr("value", function (d) {
                 return d.images_url;
 
+            })
+            .attr("data-sf", function (d) {
+                return d.scoresf;
             });
         //console.log(options);
 
@@ -59,6 +62,9 @@
             .attr("value", function (d) {
                 return d.elements;
 
+            })
+            .attr("data-sf", function (d) {
+                return d.scoresf;
             });
 
         $("#place_direct").click(function () {
