@@ -15,8 +15,8 @@ function init() {
 }
 
 function showInfo(data, tabletop) {
-    console.log('Successfully processed!')
-    console.log(data);
+    //console.log('Successfully processed!')
+    //console.log(data);
 
     var places = [];
     data.forEach(function (d) {
@@ -25,9 +25,7 @@ function showInfo(data, tabletop) {
         }
     });
 
-    var dropDown = d3.select("#places");
-
-    var options = dropDown.selectAll("option")
+    var options = d3.select("#places").selectAll("option")
         .data(places)
         .enter()
         .append("option")
@@ -41,7 +39,43 @@ function showInfo(data, tabletop) {
         .attr("data-sf", function (d) {
             return d.scoresf;
         });
-    //console.log(options);
+
+    var actors = [];
+    data.forEach(function (d) {
+        if (d["type"] == "actors") {
+            actors.push(d);
+        }
+    });
+
+    d3.select("#actor_cb1").selectAll("option")
+        .data(actors)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.actorsimages;
+
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+        });
+
+    d3.select("#actor_cb2").selectAll("option")
+        .data(actors)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.actorsimages;
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+
+        });
 
 
     var directors = [];
@@ -50,9 +84,8 @@ function showInfo(data, tabletop) {
             directors.push(d);
         }
     });
-    var dropDown = d3.select("#directors");
 
-    var options = dropDown.selectAll("option")
+    var options = d3.select("#directors").selectAll("option")
         .data(directors)
         .enter()
         .append("option")
@@ -77,48 +110,6 @@ function showInfo(data, tabletop) {
     $("#place_text").click(function () {
         update_picture();
     });
-    var actors = [];
-    data.forEach(function (d) {
-        if (d["type"] == "actors") {
-            actors.push(d);
-        }
-    });
-
-    var dropDown = d3.select("#actors");
-
-    var options = dropDown.selectAll("option")
-        .data(actors)
-        .enter()
-        .append("option")
-        .text(function (d) {
-            return d.elements;
-        })
-        .attr("value", function (d) {
-            return d.actorsimages;
-
-        })
-        .attr("data-sf", function (d) {
-            return d.scoresf;
-        });
-    console.log(options);
-
-    var dropDown2 = d3.select("#actors2");
-
-    var options2 = dropDown2.selectAll("option")
-        .data(actors)
-        .enter()
-        .append("option")
-        .text(function (d) {
-            return d.elements;
-        })
-        .attr("value", function (d) {
-            return d.actorsimages;
-        })
-        .attr("data-sf", function (d) {
-            return d.scoresf;
-
-        });
-
 
     $(".actor").on("change", function () {
         update_picture()
@@ -127,14 +118,25 @@ function showInfo(data, tabletop) {
 
 }
 
+function dragstarted(d) {
+    d3.select(this).raise().classed("active", true);
+}
+
+function dragged(d) {
+    d3.select("text").attr("x", d3.event.x).attr("y", d3.event.y);
+}
+
+function dragended(d) {
+    d3.select(this).classed("active", false);
+}
 
 function update_picture() {
     $("#svg").html('');
 
+    console.log("update picture");
     // Background
     var img = $("#places").val();
     if (img != "") {
-        console.log(img);
         d3.select("svg").append("svg:image")
             .attr("xlink:href", img)
             .attr("x", "0")
@@ -142,47 +144,44 @@ function update_picture() {
             .attr("width", "640")
             .attr("height", "833");
 
-        d3.select("svg").append("text")
-            .attr("x", 100)
-            .attr("y", 100)
-            .attr("font-family", "Arial")
-            .attr("font-size", "30px")
     }
 
     //actor 1
-    var actor1_img = $("#actor1 :selected").val();
-    var actor1_num = $("#actor1 :selected").attr("data-number");
-    var actor1_name = $("#actor1 option:selected").text();
-
+    var actor1_img = $("#actor_cb1 :selected").val();
+    var actor1_name = $("#actor_cb1 option:selected").text();
+    console.log("Actor1 " + actor2_img);
     if (actor1_img != "") {
-        imageAnimation.init(0, "#svg", actor1_img, actor1_num);
+        imageAnimation.init(0, "#svg", actor1_img, "1");
 
         d3.select("svg").append("text")
             .attr("x", 100)
-            .attr("y", 100)
+            .attr("y", 400)
             .text(actor1_name)
+            .attr("id", "actor1_txt")
+            .attr("class", "actor_txt")
             .attr("font-family", "Arial")
             .attr("font-size", "30px")
     }
-    //actor 1
-    var actor2_img = $("#actor2 :selected").val();
-    var actor2_num = $("#actor2 :selected").attr("data-number");
-    var actor2_name = $("#actor2 option:selected").text();
+    //actor 2
+    var actor2_img = $("#actor_cb2 :selected").val();
+    var actor2_name = $("#actor_cb2 option:selected").text();
+    console.log("Actor2 " + actor2_img);
 
     if (actor2_img != "") {
-        imageAnimation.init(0, "#svg", actor2_img, actor2_num);
+        imageAnimation.init(0, "#svg", actor2_img, "2");
 
         d3.select("svg").append("text")
-            .attr("x", 100)
-            .attr("y", 100)
+            .attr("x", 400)
+            .attr("y", 400)
             .text(actor2_name)
+            .attr("id", "actor2_txt")
+            .attr("class", "actor2_txt")
             .attr("font-family", "Arial")
             .attr("font-size", "30px")
     }
 
     // Title
     var txt = $("#title").val();
-    //$("#svg").html("");
 
     //TODO: get font from another combo box
     var font = "sans-serif";
@@ -198,19 +197,9 @@ function update_picture() {
             .on("drag", dragged)
             .on("end", dragended));
 
-    function dragstarted(d) {
-        d3.select(this).raise().classed("active", true);
-    }
-
-    function dragged(d) {
-        d3.select("text").attr("x", d3.event.x).attr("y", d3.event.y);
-    }
-
-    function dragended(d) {
-        d3.select(this).classed("active", false);
-    }
 
     // Director
+    $("#director_txt").remove();
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
     var font = "sans-serif";
@@ -218,9 +207,9 @@ function update_picture() {
         .attr("x", 100)
         .attr("y", 100)
         .text(txtdirect)
+        .attr("id", "director_txt")
         .attr("font-family", font)
         .attr("font-size", "30px");
-    $("#txt").remove();
 
 }
 
@@ -255,9 +244,9 @@ var imageAnimation = new function () {
             .attr("y", 0)
             .attr("transform", "translate(0,0)")
             .append('image')
-            .attr("x", 0)
-            .attr("id", "actor" + num)
+            .attr("x", num == '1' ? 0 : 400)
             .attr("y", 0)
+            .attr("id", "actor" + num)
             .attr("width", 300)
             .attr("height", 300)
             .attr("xlink:href", img)
