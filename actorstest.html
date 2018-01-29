@@ -173,6 +173,8 @@
                 .attr("width", 300)
                 .attr("height", 300)
                 .attr("xlink:href", img)
+                .on("mouseenter.hover", mouseenter)
+                .on("mouseleave.hover", end)
                 .call(drag);
 
             $("#wheel" + num).bind("click", function () {
@@ -198,7 +200,14 @@
         }
 
     };
-
+    function mouseenter () {
+        d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
+    }
+    function end() {
+        var el = d3.select(this),
+            d = el.datum();
+        el.style("stroke-width", 0).style("fill", d.color).style('cursor', 'default');
+    }
     window.addEventListener('DOMContentLoaded', init);
 </script>
 </body

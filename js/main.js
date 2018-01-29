@@ -62,13 +62,13 @@
             });
 
         $("#directors").on("change", function () {
-            var txt = $("#directors").val();
-            console.log(txt);
+            var txtdirect = $("#directors").val();
+            console.log(txtdirect);
             var font = "sans-serif"
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
-                .text(txt)
+                .text(txtdirect)
                 .attr("font-family", font)
                 .attr("font-size", "30px")
             $("#txt").remove();
@@ -92,6 +92,7 @@
         });
             $("#place_text").click(function () {
                 var txt = $("#title").val();
+
                 console.log(txt);
                 //$("#svg").html("");
 
@@ -99,11 +100,27 @@
                 var font = "sans-serif"
 
                 d3.select("svg").append("text")
-                    .attr("x", 100 + Math.random() * 100)
-                    .attr("y", 100 + Math.random() * 100)
+                    .attr("x", 100)
+                    .attr("y", 100)
                     .text(txt)
                     .attr("font-family", font)
                     .attr("font-size", "30px")
+                    .call(d3.drag()
+                        .on("start", dragstarted)
+                        .on("drag", dragged)
+                        .on("end", dragended));
+
+                function dragstarted(d) {
+                    d3.select(this).raise().classed("active", true);
+                }
+
+                function dragged(d) {
+                    d3.select("text").attr("x",  d3.event.x).attr("y", d3.event.y);
+                }
+
+                function dragended(d) {
+                    d3.select(this).classed("active", false);
+                }
 
 
 
@@ -175,11 +192,11 @@
     var imageAnimation = new function () {
 
         var instances = {};
-        this.init = function (id, baseId, img, num) {
+        this.init = function (id, baseId, img, num, text) {
             console.log("init", img);
-            instances[id] = new ImageAnimation(baseId, img, num);
+            instances[id] = new ImageAnimation(baseId, img, num, text);
         };
-        function ImageAnimation(id, img, num) {
+        function ImageAnimation(id, img, num, text) {
             var drag, dgrop;
 
             $("#actor" + num).remove();
