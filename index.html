@@ -44,6 +44,7 @@
             <div style="margin-top: 20px" class="jumbotron">
                 <h2 style="color: white">Lieux/Environnements</h2>
                        <select id="places" name="name-list">
+                           <option value="" data-sf="0">... Select location</option>
 
         </select>
 
@@ -74,7 +75,7 @@
             <!--Réalisateur-->
             <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
                 <select id="directors" name="name-list">
-
+                    <option value="" data-sf="0">... Select director</option>
         </select>
 
                 <!--Preview-->
@@ -146,6 +147,9 @@ ou</h3>
         </div>
     </div>
 </div>
+
+<div id='sum'>SUM OF SELECTED OPTIONS</div>
+
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src='js/bootstrap.css'></script>
 <script src="js/jquery-3.2.1.min.js"></script>

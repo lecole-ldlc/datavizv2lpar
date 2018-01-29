@@ -203,6 +203,7 @@
     $('select').change(function(){
         var sum = 0;
         $('select :selected').each(function() {
+
             sum += parseInt($(this).attr("data-sf"));
         });
         $("#sum").html("SUM " + sum);

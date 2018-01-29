@@ -1,259 +1,297 @@
-    function SVG(tag) {
-        return document.createElementNS('http://www.w3.org/2000/svg', tag);
-    }
-    var font = "Arial";
-    //import données depuis gsheet
-    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
+function SVG(tag) {
+    return document.createElementNS('http://www.w3.org/2000/svg', tag);
+}
 
-    function init() {
-        Tabletop.init({
-            key: publicSpreadsheetUrl,
-            callback: showInfo,
-            simpleSheet: true
-        })
-    }
+var font = "Arial";
+//import données depuis gsheet
+var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
-    function showInfo(data, tabletop) {
-        console.log('Successfully processed!')
-        console.log(data);
+function init() {
+    Tabletop.init({
+        key: publicSpreadsheetUrl,
+        callback: showInfo,
+        simpleSheet: true
+    })
+}
 
+function showInfo(data, tabletop) {
+    console.log('Successfully processed!')
+    console.log(data);
 
-        var places = [];
-        data.forEach(function (d) {
-            if (d["type"] == "places") {
-                places.push(d);
-            }
-        });
-
-        var dropDown = d3.select("#places");
-
-        var options = dropDown.selectAll("option")
-            .data(places)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.images_url;
-
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
-            });
-        //console.log(options);
-
-
-        var directors = [];
-        data.forEach(function (d) {
-            if (d["type"] == "directors") {
-                directors.push(d);
-            }
-        });
-        var dropDown = d3.select("#directors");
-
-        var options = dropDown.selectAll("option")
-            .data(directors)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.elements;
-
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
-            });
-
-        $("#directors").on("change", function () {
-            var txtdirect = $("#directors").val();
-            console.log(txtdirect);
-            var font = "sans-serif"
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .text(txtdirect)
-                .attr("font-family", font)
-                .attr("font-size", "30px")
-            $("#txt").remove();
-        });
-
-        $("#places").on("change", function () {
-            var img = $("#places").val()    ;
-            console.log(img);
-            d3.select("svg").append("svg:image")
-                .attr("xlink:href", img)
-                .attr("x", "0")
-                .attr("y", "0")
-                .attr("width", "640")
-                .attr("height", "833");
-
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .attr("font-family", "Arial")
-                .attr("font-size", "30px")
-        });
-            $("#place_text").click(function () {
-                var txt = $("#title").val();
-
-                console.log(txt);
-                //$("#svg").html("");
-
-                //TODO: get font from another combo box
-                var font = "sans-serif"
-
-                d3.select("svg").append("text")
-                    .attr("x", 100)
-                    .attr("y", 100)
-                    .text(txt)
-                    .attr("font-family", font)
-                    .attr("font-size", "30px")
-                    .call(d3.drag()
-                        .on("start", dragstarted)
-                        .on("drag", dragged)
-                        .on("end", dragended));
-
-                function dragstarted(d) {
-                    d3.select(this).raise().classed("active", true);
-                }
-
-                function dragged(d) {
-                    d3.select("text").attr("x",  d3.event.x).attr("y", d3.event.y);
-                }
-
-                function dragended(d) {
-                    d3.select(this).classed("active", false);
-                }
-
-
-
-
-            });
-        var actors = [];
-        data.forEach(function (d) {
-            if (d["type"] == "actors") {
-                actors.push(d);
-            }
-        });
-
-        var dropDown = d3.select("#actors");
-
-        var options = dropDown.selectAll("option")
-            .data(actors)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.actorsimages;
-
-            });
-        console.log(options);
-
-        var dropDown2 = d3.select("#actors2");
-
-        var options2 = dropDown2.selectAll("option")
-            .data(actors)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.actorsimages;
-
-            });
-
-
-        $(".actor").on("change", function () {
-            var img = $(this).val();
-            var num = $(this).attr("data-number");
-            var actor_name = $("#" + $(this).attr("id")  + " option:selected").text();
-            console.log(actor_name);
-
-            console.log(img, num);
-            imageAnimation.init(0, "#svg", img, num);
-            /*d3.select("svg").append("svg:image")
-             .attr("xlink:href", img)
-             .attr("x", "0")
-             .attr("y", "0")
-             .attr("width", "640")
-             .attr("height", "833");
-             */
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .text(actor_name)
-                .attr("font-family", "Arial")
-                .attr("font-size", "30px")
-        });
-
-
-
-    }
-    var imageAnimation = new function () {
-
-        var instances = {};
-        this.init = function (id, baseId, img, num, text) {
-            console.log("init", img);
-            instances[id] = new ImageAnimation(baseId, img, num, text);
-        };
-        function ImageAnimation(id, img, num, text) {
-            var drag, dgrop;
-
-            $("#actor" + num).remove();
-
-            drag = d3.drag()
-                .on("drag", function (d, i) {
-                    d.x += d3.event.dx;
-                    d.y += d3.event.dy;
-                    d3.select(this).attr("transform", function (d, i) {
-                        return "translate(" + [d.x, d.y] + "),rotate(" + d.r + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
-                    })
-                });
-
-            console.log("append g", id);
-
-
-            dgrop = d3.select(id).append("g")
-                .data([{"x": 20, "y": 20, "r": 1, "scale": 1}])
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("transform", "translate(0,0)")
-                .append('image')
-                .attr("x", 0)
-                .attr("id", "actor" + num)
-                .attr("y", 0)
-                .attr("width", 300)
-                .attr("height", 300)
-                .attr("xlink:href", img)
-                .call(drag);
-
-            $("#wheel" + num).bind("click", function () {
-                dgrop.attr("transform", function (d, i) {
-                    d.r = d.r - 30;
-                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " ,160, 160),scale(" + d.scale + "," + d.scale + ")";
-                });
-            });
-
-            $("#big" + num).bind("click", function () {
-                dgrop.attr("transform", function (d, i) {
-                    d.scale = d.scale * 1.2;
-                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
-                });
-            });
-
-            $("#small" + num).bind("click", function () {
-                dgrop.attr("transform", function (d, i) {
-                    d.scale = d.scale * 0.8;
-                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
-                });
-            });
+    var places = [];
+    data.forEach(function (d) {
+        if (d["type"] == "places") {
+            places.push(d);
         }
+    });
 
+    var dropDown = d3.select("#places");
+
+    var options = dropDown.selectAll("option")
+        .data(places)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.images_url;
+
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+        });
+    //console.log(options);
+
+
+    var directors = [];
+    data.forEach(function (d) {
+        if (d["type"] == "directors") {
+            directors.push(d);
+        }
+    });
+    var dropDown = d3.select("#directors");
+
+    var options = dropDown.selectAll("option")
+        .data(directors)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.elements;
+
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+        });
+
+    $("#directors").on("change", function () {
+        update_picture();
+    });
+
+    $("#places").on("change", function () {
+        update_picture();
+    });
+    $("#place_text").click(function () {
+        update_picture();
+    });
+    var actors = [];
+    data.forEach(function (d) {
+        if (d["type"] == "actors") {
+            actors.push(d);
+        }
+    });
+
+    var dropDown = d3.select("#actors");
+
+    var options = dropDown.selectAll("option")
+        .data(actors)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.actorsimages;
+
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+        });
+    console.log(options);
+
+    var dropDown2 = d3.select("#actors2");
+
+    var options2 = dropDown2.selectAll("option")
+        .data(actors)
+        .enter()
+        .append("option")
+        .text(function (d) {
+            return d.elements;
+        })
+        .attr("value", function (d) {
+            return d.actorsimages;
+        })
+        .attr("data-sf", function (d) {
+            return d.scoresf;
+
+        });
+
+
+    $(".actor").on("change", function () {
+        update_picture()
+    });
+
+
+}
+
+
+function update_picture() {
+    $("#svg").html('');
+
+    // Background
+    var img = $("#places").val();
+    if (img != "") {
+        console.log(img);
+        d3.select("svg").append("svg:image")
+            .attr("xlink:href", img)
+            .attr("x", "0")
+            .attr("y", "0")
+            .attr("width", "640")
+            .attr("height", "833");
+
+        d3.select("svg").append("text")
+            .attr("x", 100)
+            .attr("y", 100)
+            .attr("font-family", "Arial")
+            .attr("font-size", "30px")
+    }
+
+    //actor 1
+    var actor1_img = $("#actor1 :selected").val();
+    var actor1_num = $("#actor1 :selected").attr("data-number");
+    var actor1_name = $("#actor1 option:selected").text();
+
+    if (actor1_img != "") {
+        imageAnimation.init(0, "#svg", actor1_img, actor1_num);
+
+        d3.select("svg").append("text")
+            .attr("x", 100)
+            .attr("y", 100)
+            .text(actor1_name)
+            .attr("font-family", "Arial")
+            .attr("font-size", "30px")
+    }
+    //actor 1
+    var actor2_img = $("#actor2 :selected").val();
+    var actor2_num = $("#actor2 :selected").attr("data-number");
+    var actor2_name = $("#actor2 option:selected").text();
+
+    if (actor2_img != "") {
+        imageAnimation.init(0, "#svg", actor2_img, actor2_num);
+
+        d3.select("svg").append("text")
+            .attr("x", 100)
+            .attr("y", 100)
+            .text(actor2_name)
+            .attr("font-family", "Arial")
+            .attr("font-size", "30px")
+    }
+
+    // Title
+    var txt = $("#title").val();
+    //$("#svg").html("");
+
+    //TODO: get font from another combo box
+    var font = "sans-serif";
+
+    d3.select("svg").append("text")
+        .attr("x", 100)
+        .attr("y", 100)
+        .text(txt)
+        .attr("font-family", font)
+        .attr("font-size", "30px")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    function dragstarted(d) {
+        d3.select(this).raise().classed("active", true);
+    }
+
+    function dragged(d) {
+        d3.select("text").attr("x", d3.event.x).attr("y", d3.event.y);
+    }
+
+    function dragended(d) {
+        d3.select(this).classed("active", false);
+    }
+
+    // Director
+    var txtdirect = $("#directors").val();
+    console.log(txtdirect);
+    var font = "sans-serif";
+    d3.select("svg").append("text")
+        .attr("x", 100)
+        .attr("y", 100)
+        .text(txtdirect)
+        .attr("font-family", font)
+        .attr("font-size", "30px");
+    $("#txt").remove();
+
+}
+
+var imageAnimation = new function () {
+
+    var instances = {};
+    this.init = function (id, baseId, img, num, text) {
+        console.log("init", img);
+        instances[id] = new ImageAnimation(baseId, img, num, text);
     };
-    window.addEventListener('DOMContentLoaded', init);
+
+    function ImageAnimation(id, img, num, text) {
+        var drag, dgrop;
+
+        $("#actor" + num).remove();
+
+        drag = d3.drag()
+            .on("drag", function (d, i) {
+                d.x += d3.event.dx;
+                d.y += d3.event.dy;
+                d3.select(this).attr("transform", function (d, i) {
+                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
+                })
+            });
+
+        console.log("append g", id);
+
+
+        dgrop = d3.select(id).append("g")
+            .data([{"x": 20, "y": 20, "r": 1, "scale": 1}])
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("transform", "translate(0,0)")
+            .append('image')
+            .attr("x", 0)
+            .attr("id", "actor" + num)
+            .attr("y", 0)
+            .attr("width", 300)
+            .attr("height", 300)
+            .attr("xlink:href", img)
+            .call(drag);
+
+        $("#wheel" + num).bind("click", function () {
+            dgrop.attr("transform", function (d, i) {
+                d.r = d.r - 30;
+                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " ,160, 160),scale(" + d.scale + "," + d.scale + ")";
+            });
+        });
+
+        $("#big" + num).bind("click", function () {
+            dgrop.attr("transform", function (d, i) {
+                d.scale = d.scale * 1.2;
+                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+            });
+        });
+
+        $("#small" + num).bind("click", function () {
+            dgrop.attr("transform", function (d, i) {
+                d.scale = d.scale * 0.8;
+                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+            });
+        });
+    }
+
+};
+$('select').change(function () {
+    var sum = 0;
+    $('select :selected').each(function () {
+        //console.log($(this), parseFloat($(this).attr("data-sf")));
+        sum += parseInt($(this).attr("data-sf"));
+    });
+    $("#sum").html("SUM " + sum);
+});
+window.addEventListener('DOMContentLoaded', init);
