@@ -1,3 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Generate SVG</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script type='text/javascript'></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+        svg {
+            margin-top: 10px;
+            border: 1px black solid;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-4">
+        <select class="actor" data-number="1" id="actors" name="name-list">
+            <option value="" data-sf="0">... Select actor</option>
+        </select>
+        <select class="actor" data-number="2" id="actors2" name="name-list">
+            <option value="" data-sf="0">... Select actor</option>
+
+        </select>
+
+    </div>
+    <div class="col-4">
+        <div id='sum'>SUM OF SELECTED OPTIONS</div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-2">
+        <button type="button" id="wheel1">Rotate</button>
+        <button type="button" id="big1">Big</button>
+        <button type="button" id="small1">Small</button>
+
+        <button type="button" id="wheel2">Rotate2</button>
+        <button type="button" id="big2">Big2</button>
+        <button type="button" id="small2">Small2</button>
+        <svg id="svg" width="600" height="880">
+        </svg>
+    </div>
+</div>
+<script>
     function SVG(tag) {
         return document.createElementNS('http://www.w3.org/2000/svg', tag);
     }
@@ -13,125 +71,12 @@
         })
     }
 
+
     function showInfo(data, tabletop) {
-        console.log('Successfully processed!')
+        console.log('Successfully processed!');
         console.log(data);
 
 
-        var places = [];
-        data.forEach(function (d) {
-            if (d["type"] == "places") {
-                places.push(d);
-            }
-        });
-
-        var dropDown = d3.select("#places");
-
-        var options = dropDown.selectAll("option")
-            .data(places)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.images_url;
-
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
-            });
-        //console.log(options);
-
-
-        var directors = [];
-        data.forEach(function (d) {
-            if (d["type"] == "directors") {
-                directors.push(d);
-            }
-        });
-        var dropDown = d3.select("#directors");
-
-        var options = dropDown.selectAll("option")
-            .data(directors)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.elements;
-
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
-            });
-
-        $("#directors").on("change", function () {
-            var txtdirect = $("#directors").val();
-            console.log(txtdirect);
-            var font = "sans-serif"
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .text(txtdirect)
-                .attr("font-family", font)
-                .attr("font-size", "30px")
-            $("#txt").remove();
-        });
-
-        $("#places").on("change", function () {
-            var img = $("#places").val()    ;
-            console.log(img);
-            d3.select("svg").append("svg:image")
-                .attr("xlink:href", img)
-                .attr("x", "0")
-                .attr("y", "0")
-                .attr("width", "640")
-                .attr("height", "833");
-
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .attr("font-family", "Arial")
-                .attr("font-size", "30px")
-        });
-            $("#place_text").click(function () {
-                var txt = $("#title").val();
-
-                console.log(txt);
-                //$("#svg").html("");
-
-                //TODO: get font from another combo box
-                var font = "sans-serif"
-
-                d3.select("svg").append("text")
-                    .attr("x", 100)
-                    .attr("y", 100)
-                    .text(txt)
-                    .attr("font-family", font)
-                    .attr("font-size", "30px")
-                    .call(d3.drag()
-                        .on("start", dragstarted)
-                        .on("drag", dragged)
-                        .on("end", dragended));
-
-                function dragstarted(d) {
-                    d3.select(this).raise().classed("active", true);
-                }
-
-                function dragged(d) {
-                    d3.select("text").attr("x",  d3.event.x).attr("y", d3.event.y);
-                }
-
-                function dragended(d) {
-                    d3.select(this).classed("active", false);
-                }
-
-
-
-
-            });
         var actors = [];
         data.forEach(function (d) {
             if (d["type"] == "actors") {
@@ -150,7 +95,9 @@
             })
             .attr("value", function (d) {
                 return d.actorsimages;
-
+            })
+            .attr("data-sf", function (d) {
+                return d.scoresf;
             });
         console.log(options);
 
@@ -165,16 +112,15 @@
             })
             .attr("value", function (d) {
                 return d.actorsimages;
-
+            })
+            .attr("data-sf", function (d) {
+                return d.scoresf;
             });
 
 
         $(".actor").on("change", function () {
             var img = $(this).val();
             var num = $(this).attr("data-number");
-            var actor_name = $("#" + $(this).attr("id")  + " option:selected").text();
-            console.log(actor_name);
-
             console.log(img, num);
             imageAnimation.init(0, "#svg", img, num);
             /*d3.select("svg").append("svg:image")
@@ -187,22 +133,20 @@
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
-                .text(actor_name)
+                .text("lol")
                 .attr("font-family", "Arial")
                 .attr("font-size", "30px")
         });
-
-
 
     }
     var imageAnimation = new function () {
 
         var instances = {};
-        this.init = function (id, baseId, img, num, text) {
+        this.init = function (id, baseId, img, num) {
             console.log("init", img);
-            instances[id] = new ImageAnimation(baseId, img, num, text);
+            instances[id] = new ImageAnimation(baseId, img, num);
         };
-        function ImageAnimation(id, img, num, text) {
+        function ImageAnimation(id, img, num) {
             var drag, dgrop;
 
             $("#actor" + num).remove();
@@ -256,4 +200,16 @@
         }
 
     };
+    $('select').change(function(){
+        var sum = 0;
+        $('select :selected').each(function() {
+            sum += parseInt($(this).attr("data-sf"));
+        });
+        $("#sum").html("SUM " + sum);
+    });
+
     window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
+
