@@ -95,9 +95,7 @@
             })
             .attr("value", function (d) {
                 return d.actorsimages;
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
+
             });
         console.log(options);
 
@@ -112,16 +110,17 @@
             })
             .attr("value", function (d) {
                 return d.actorsimages;
-            })
-            .attr("data-sf", function (d) {
-                return d.scoresf;
+
             });
 
 
         $(".actor").on("change", function () {
             var img = $(this).val();
             var num = $(this).attr("data-number");
-            console.log(img, num);
+            var actor_name = $("#" + $(this).attr("id")  + " option:selected").text();
+            console.log(actor_name);
+
+
             imageAnimation.init(0, "#svg", img, num);
             /*d3.select("svg").append("svg:image")
              .attr("xlink:href", img)
@@ -133,7 +132,6 @@
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
-                .text("lol")
                 .attr("font-family", "Arial")
                 .attr("font-size", "30px")
         });
@@ -200,13 +198,6 @@
         }
 
     };
-    $('select').change(function(){
-        var sum = 0;
-        $('select :selected').each(function() {
-            sum += parseInt($(this).attr("data-sf"));
-        });
-        $("#sum").html("SUM " + sum);
-    });
 
     window.addEventListener('DOMContentLoaded', init);
 </script>

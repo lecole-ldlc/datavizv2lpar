@@ -116,6 +116,8 @@
 
         $(".actor").on("change", function () {
             var img = $(this).val();
+            var actor_name = $("#" + $(this).attr("id")  + " option:selected").text();
+            console.log(actor_name);
             var num = $(this).attr("data-number");
             console.log(img, num);
             imageAnimation.init(0, "#svg", img, num);
@@ -129,6 +131,7 @@
             d3.select("svg").append("text")
                 .attr("x", 100)
                 .attr("y", 100)
+                .text(actor_name)
                 .attr("font-family", "Arial")
                 .attr("font-size", "30px")
         });
