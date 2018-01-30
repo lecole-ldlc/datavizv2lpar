@@ -261,10 +261,7 @@ var imageAnimation = new function () {
 
         drag = d3.drag()
             .on("drag", function (d, i) {
-                console.log(d.x, d.y);
-                d3.select(this).attr("transform", function (dd, i) {
-                    console.log(d.num);
-                    console.log(actor_pos[dd.num]);
+                d3.select(this).attr("transform", function (d, i) {
                     actor_pos[d.num][0] += d3.event.dx;
                     actor_pos[d.num][1] += d3.event.dy;
                     return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + ")," +
@@ -275,7 +272,7 @@ var imageAnimation = new function () {
 
         console.log(actor_pos[num][0], actor_pos[num][1]);
         dgrop = d3.select(id).append("g")
-            .data([{"num": num, "x": 0, "y": 0, "r": 0, "scale": 1, "pivot_x": 160, "pivot_y": 160}])
+            .data([{"num": num, "x": 0, "y": 0, "r": actor_rot[num], "scale": actor_scale[num], "pivot_x": 160, "pivot_y": 160}])
             .attr("x", 0)
             .attr("y", 0)
             .attr("transform", function (d) {
@@ -289,7 +286,7 @@ var imageAnimation = new function () {
             .attr("height", 320)
             .attr("xlink:href", img)
             .attr("transform", function (d) {
-                console.log(d.x, d.y, d.num, d.pivot_x, d.pivot_y);
+                console.log(d);
                 return "translate(" + actor_pos[num][0] + "," + actor_pos[num][1] + "), rotate(" + actor_rot[num] + " " + d.pivot_x + " " + d.pivot_y + "), scale(" + actor_scale[num] + ", " + actor_scale[num] + ")"
             })
             .call(drag);
