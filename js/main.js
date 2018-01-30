@@ -39,9 +39,52 @@ function init() {
     })
 }
 
-function showInfo(data, tabletop) {
+var data;
+var directors = [];
+var actors = [];
+
+function add_titles(a, title_start, title_end) {
+    console.log(a);
+    title_start.push(a.movie_title_start);
+    title_start.push(a.movie_title_start2);
+    title_start.push(a.movie_title_start3);
+    title_end.push(a.movite_title_end);
+    title_end.push(a.movite_title_end2);
+    title_end.push(a.movite_title_end3);
+}
+
+function generate_title() {
+
+    var actor1_id = $("#actor_cb1 option:selected").attr("data-id");
+    var actor2_id = $("#actor_cb2 option:selected").attr("data-id");
+    var director_id = $("#directors option:selected").attr("data-id");
+
+    var title_start = [];
+    var title_end = [];
+    if (actor1_id) {
+        add_titles(actors[actor1_id], title_start, title_end);
+    }
+    if (actor2_id) {
+        add_titles(actors[actor2_id], title_start, title_end);
+    }
+    if (director_id) {
+        add_titles(directors[actor2_id], title_start, title_end);
+    }
+
+    if (title_start.length > 1 && title_end.length > 1) {
+        var tstart = title_start[Math.floor(Math.random() * title_start.length)];
+        var tend = title_end[Math.floor(Math.random() * title_end.length)];
+        return tstart + " " + tend;
+    } else {
+        return "Génération impossible ! sélectionner des acteurs/réalisateur !";
+    }
+}
+
+function showInfo(dataf, tabletop) {
     //console.log('Successfully processed!')
     //console.log(data);
+
+    data = dataf;
 
     var places = [];
     data.forEach(function (d) {
@@ -65,7 +108,6 @@ function showInfo(data, tabletop) {
             return d.scoresf;
         });
 
-    var actors = [];
     data.forEach(function (d) {
         if (d["type"] == "actors") {
             actors.push(d);
@@ -85,6 +127,9 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
     d3.select("#actor_cb2").selectAll("option")
@@ -99,11 +144,12 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
-
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
 
-    var directors = [];
     data.forEach(function (d) {
         if (d["type"] == "directors") {
             directors.push(d);
@@ -123,6 +169,9 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
     $("#directors").on("change", function () {
@@ -149,6 +198,11 @@ function showInfo(data, tabletop) {
         update_picture()
     });
 
+    $("#refresh").click(function () {
+        var title = generate_title();
+        $("#title").val(title);
+        console.log(title);
+    })
 
 }
 
