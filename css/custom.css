@@ -1,5 +1,5 @@
 .jumbotron {
-    background-color: #00042f;
+    background-color: #000759;
     margin-bottom: 10px;
     padding: 15px;
 }
@@ -59,4 +59,7 @@ svg {
 
 select {
     width: 300px;
+}
+body{
+    background-color: #3a3a3a;
 }

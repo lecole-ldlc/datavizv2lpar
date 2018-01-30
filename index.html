@@ -15,34 +15,43 @@
 <body>
 <!--Titre et description de la dv-->
 <div class="jumbotron">
-    <h1 style="color: white">Fais ton film</h1>
-    <p style="color: white">Je suis une descriptionJe suis une descriptionJe suis une descriptionJe suis une
+    <h1 style="text-align: center ;color: white">Fais ton film</h1>
+    <p style="text-align: center ;color: white">Je suis une descriptionJe suis une descriptionJe suis une descriptionJe suis une
         descriptionJe suis une description</p>
 </div>
 
 <!--Dataviz-->
-<div class="jumbotron">
+<div style="background-color: #adadad" class="jumbotron">
     <!--Jauge, SVG, Selecteurs-->
 
     <div class="row">
 
         <!--Jauge-->
-        <div style="background-color: #9fcdff" class="col-1">
-            <img src="img/jauge.png">
+        <div style="background-color: #adadad" class="col-1">
+            <div class="jumbotron">
+            <img src="img/jauge2.png">
+</div>
         </div>
 
         <!--SVG-->
-        <div STYLE="background-color: #f1f0f4" class="col-6">
+        <div STYLE="background-color: #adadad" class="col-6">
             <div class="affiche">
                 <svg width="640" height="833" id="svg"></svg>
             </div>
+            <!--Synopsis-->
+            <div style="margin-top: 12px" class="jumbotron">
+                <h2 style="color: white">Synopsis
+
+                </h2>
+            </div>
         </div>
 
+
         <!--Selecteur-->
-        <div style="background-color: #f4cdcf" class="col-5">
+        <div style="background-color: #adadad" class="col-5">
 
             <!--Lieux-->
-            <div style="margin-top: 20px" class="jumbotron">
+            <div class="jumbotron">
                 <h2 style="color: white">Lieux / Environnements</h2>
                 <div class="row">
                     <div class="form-group col-8">
@@ -111,7 +120,7 @@
 
             <!--Titre-->
             <div class="jumbotron">
-                <h2 style="color: white">Titre</h2>
+                <h2 style="color: white">Titre (personnalisé ou mashup)</h2>
 
                 <div class="row">
                     <div class="form-group col-8">
@@ -124,8 +133,7 @@
                     </div>
                 </div>
 
-                <h3 style="color: white">
-                    ou</h3>
+
 
                 <div class="row">
                     <div class="form-group col-8">
@@ -144,7 +152,7 @@
             <div class="jumbotron">
 
                 <!--Bouton-->
-                <button id="myBtn" class="btn btn-primary">Open Modal</button>
+                <button id="myBtn" class="btn btn-primary">Générer l'affiche</button>
                 <div id="myModal" class="modal">
 
                     <!-- Modal content -->
@@ -181,13 +189,6 @@
                 </div>
             </div>
 
-
-            <!--Synopsis-->
-            <div class="jumbotron">
-                <h2 style="color: white">Synopsis
-
-                </h2>
-            </div>
         </div>
     </div>
 </div>
