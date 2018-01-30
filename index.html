@@ -8,6 +8,7 @@
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link href="css/custom.css" rel="stylesheet" type="text/css">
 </head>
@@ -33,7 +34,7 @@
         <!--SVG-->
         <div STYLE="background-color: #f1f0f4" class="col-6">
             <div class="affiche">
-                <svg width="640" height="833" id="svg" ></svg>
+                <svg width="640" height="833" id="svg"></svg>
             </div>
         </div>
 
@@ -42,57 +43,100 @@
 
             <!--Lieux-->
             <div style="margin-top: 20px" class="jumbotron">
-                <h2 style="color: white">Lieux/Environnements</h2>
-                       <select id="places" name="name-list">
-                           <option value="" data-sf="0">... Select location</option>
-
-        </select>
-
+                <h2 style="color: white">Lieux / Environnements</h2>
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control" id="places" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un lieu</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <!--Acteur1-->
             <div class="jumbotron"><h2 style="color: white">Acteur 1</h2>
-                <select class="actor" data-number="1" id="actors" name="name-list">
-                    <option value="" data-sf="0">... Select actor</option>
-                </select>
-                <button type="button" id="wheel1">Rotate</button>
-                <button type="button" id="big1">Big</button>
-                <button type="button" id="small1">Small</button>
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control actor" id="actor_cb1" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un acteur</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="wheel1"><i class="fa fa-rotate-left"></i></button>
+                            <button type="button" class="btn btn-primary" id="big1"><i class="fa fa-expand"></i></button>
+                            <button type="button" class="btn btn-primary" id="small1"><i class="fa fa-expand"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!--Acteur2-->
             <div class="jumbotron"><h2 style="color: white">Acteur 2</h2>
-                <select class="actor" data-number="2" id="actors2" name="name-list">
-                    <option value="" data-sf="0">... Select actor</option>
-                </select>
-                <button type="button" id="wheel2">Rotate2</button>
-                <button type="button" id="big2">Big2</button>
-                <button type="button" id="small2">Small2</button>
-
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control actor" id="actor_cb2" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un acteur</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="wheel1"><i class="fa fa-rotate-left"></i></button>
+                            <button type="button" class="btn btn-primary" id="big1"><i class="fa fa-expand"></i></button>
+                            <button type="button" class="btn btn-primary" id="small1"><i class="fa fa-expand"></i></button>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
             <!--Réalisateur-->
             <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
-                <select id="directors" name="name-list">
-                    <option value="" data-sf="0">... Select director</option>
-        </select>
 
-                <!--Preview-->
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control" id="directors" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un réalisateur</option>
+                        </select>
+                    </div>
+                </div>
+
                 <svg width="500" height="120" id="preview">
                 </svg>
+
+                <!--Preview-->
+
 
             </div>
 
             <!--Titre-->
             <div class="jumbotron">
                 <h2 style="color: white">Titre</h2>
-        <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
-                <button id="place_text" class="btn btn-primary">Go</button>
+
+                <div class="row">
+                    <div class="form-group col-8">
+                        <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="place_text">Go</button>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 style="color: white">
-ou</h3>
-                <input type="text" value="Mon titre mashup" disabled="disabled">
-                <button>refresh</button>
+                    ou</h3>
+
+                <div class="row">
+                    <div class="form-group col-8">
+                        <input class="form-control" type="text" value="Mon titre mashup" disabled="disabled">
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="refresh"><i class="fa fa-refresh"></i></button>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -100,7 +144,7 @@ ou</h3>
             <div class="jumbotron">
 
                 <!--Bouton-->
-                <button id="myBtn">Open Modal</button>
+                <button id="myBtn" class="btn btn-primary">Open Modal</button>
                 <div id="myModal" class="modal">
 
                     <!-- Modal content -->
@@ -114,13 +158,13 @@ ou</h3>
                                 <div class="jumbotron">
                                     <h2>Voilà ! Ton affiche est prête !</h2>
                                     <div class="row">
-                                    <div class="col-6">
-                                        <svg width="150px">85%</svg>
-                                    </div>
-                                    <div class="col-6">
-                                        <p>Texte sur variable</p>
-                                    </div>
+                                        <div class="col-6">
+                                            <svg width="150px">85%</svg>
                                         </div>
+                                        <div class="col-6">
+                                            <p>Texte sur variable</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="jumbotron">
                                     <h2>
@@ -141,7 +185,7 @@ ou</h3>
             <!--Synopsis-->
             <div class="jumbotron">
                 <h2 style="color: white">Synopsis
-                    <button>lets go</button>
+
                 </h2>
             </div>
         </div>
@@ -151,14 +195,13 @@ ou</h3>
 <div id='sum'>SUM OF SELECTED OPTIONS</div>
 
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
-<script src='js/bootstrap.css'></script>
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
 
 
 <script src="js/main.js"></script>
 
 <script src="js/modal.js"></script>
-<script src='js/bootstrap.bundle.css'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'></script>
 </body>
