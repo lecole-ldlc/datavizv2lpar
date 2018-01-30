@@ -273,7 +273,7 @@ function update_picture() {
     //TODO: get font from another combo box
     var font = "sans-serif";
 
-    d3.select("svg").append("text")
+    d3.select("#svg").append("text")
         .attr("x", 100)
         .attr("y", 100)
         .text(txt)
@@ -290,7 +290,7 @@ function update_picture() {
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
     var font = "sans-serif";
-    d3.select("svg").append("text")
+    d3.select("#svg").append("text")
         .attr("x", 100)
         .attr("y", 100)
         .text(txtdirect)
