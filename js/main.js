@@ -68,9 +68,8 @@ function generate_title() {
         add_titles(actors[actor2_id], title_start, title_end);
     }
     if (director_id) {
-        add_titles(directors[actor2_id], title_start, title_end);
+        add_titles(directors[director_id], title_start, title_end);
     }
-
     if (title_start.length > 1 && title_end.length > 1) {
         var tstart = title_start[Math.floor(Math.random() * title_start.length)];
         var tend = title_end[Math.floor(Math.random() * title_end.length)];
