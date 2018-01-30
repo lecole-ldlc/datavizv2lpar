@@ -6,6 +6,31 @@ var font = "Arial";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
+var actor_rot = {
+    "1": 0,
+    "2": 0,
+};
+
+var actor_scale = {
+    "1": 1.0,
+    "2": 1.0,
+}
+
+var actor_pos_init = {
+    "1": [0, 200],
+    "2": [300, 200],
+};
+
+var actor_pos = {
+    "1": [0, 0],
+    "2": [0, 0],
+};
+
+var actor_title_pos = {
+    "1": [100, 400],
+    "2": [400, 400]
+};
+
 function init() {
     Tabletop.init({
         key: publicSpreadsheetUrl,
@@ -111,7 +136,16 @@ function showInfo(data, tabletop) {
         update_picture();
     });
 
-    $(".actor").on("change", function () {
+    $("#actor_cb1").on("change", function () {
+        actor_pos["1"][0] = actor_pos_init["1"][0];
+        actor_pos["1"][1] = actor_pos_init["1"][1];
+        actor_rot["1"] = 0;
+        update_picture()
+    });
+    $("#actor_cb2").on("change", function () {
+        actor_pos["2"][0] = actor_pos_init["2"][0];
+        actor_pos["2"][1] = actor_pos_init["2"][1];
+        actor_rot["2"] = 0;
         update_picture()
     });
 
@@ -154,8 +188,8 @@ function update_picture() {
         imageAnimation.init(0, "#svg", actor1_img, "1");
 
         d3.select("svg").append("text")
-            .attr("x", 100)
-            .attr("y", 400)
+            .attr("x", actor_title_pos["1"][0])
+            .attr("y", actor_title_pos["1"][1])
             .text(actor1_name)
             .attr("id", "actor1_txt")
             .attr("class", "actor_txt")
@@ -171,8 +205,8 @@ function update_picture() {
         imageAnimation.init(0, "#svg", actor2_img, "2");
 
         d3.select("svg").append("text")
-            .attr("x", 400)
-            .attr("y", 400)
+            .attr("x", actor_title_pos["2"][0])
+            .attr("y", actor_title_pos["2"][1])
             .text(actor2_name)
             .attr("id", "actor2_txt")
             .attr("class", "actor2_txt")
@@ -217,7 +251,6 @@ var imageAnimation = new function () {
 
     var instances = {};
     this.init = function (id, baseId, img, num, text) {
-        console.log("init", img);
         instances[id] = new ImageAnimation(baseId, img, num, text);
     };
 
@@ -228,48 +261,67 @@ var imageAnimation = new function () {
 
         drag = d3.drag()
             .on("drag", function (d, i) {
-                d.x += d3.event.dx;
-                d.y += d3.event.dy;
-                d3.select(this).attr("transform", function (d, i) {
-                    return "translate(" + [d.x, d.y] + "),rotate(" + d.r + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
+                console.log(d.x, d.y);
+                d3.select(this).attr("transform", function (dd, i) {
+                    console.log(d.num);
+                    console.log(actor_pos[dd.num]);
+                    actor_pos[d.num][0] += d3.event.dx;
+                    actor_pos[d.num][1] += d3.event.dy;
+                    return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + ")," +
+                        "rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + ")," +
+                        "scale(" + d.scale + "," + d.scale + ")";
                 })
             });
 
-        console.log("append g", id);
-
-
+        console.log(actor_pos[num][0], actor_pos[num][1]);
         dgrop = d3.select(id).append("g")
-            .data([{"x": 20, "y": 20, "r": 1, "scale": 1}])
+            .data([{"num": num, "x": 0, "y": 0, "r": 0, "scale": 1, "pivot_x": 160, "pivot_y": 160}])
             .attr("x", 0)
             .attr("y", 0)
-            .attr("transform", "translate(0,0)")
+            .attr("transform", function (d) {
+                return "translate(0,0), rotate(0), scale(1)"
+            })
             .append('image')
-            .attr("x", num == '1' ? 0 : 400)
+            .attr("x", 0)
             .attr("y", 0)
             .attr("id", "actor" + num)
-            .attr("width", 300)
-            .attr("height", 300)
+            .attr("width", 320)
+            .attr("height", 320)
             .attr("xlink:href", img)
+            .attr("transform", function (d) {
+                console.log(d.x, d.y, d.num, d.pivot_x, d.pivot_y);
+                return "translate(" + actor_pos[num][0] + "," + actor_pos[num][1] + "), rotate(" + actor_rot[num] + " " + d.pivot_x + " " + d.pivot_y + "), scale(" + actor_scale[num] + ", " + actor_scale[num] + ")"
+            })
             .call(drag);
 
         $("#wheel" + num).bind("click", function () {
             dgrop.attr("transform", function (d, i) {
-                d.r = d.r - 30;
-                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " ,160, 160),scale(" + d.scale + "," + d.scale + ")";
+                d.r = d.r - 15;
+                return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
+            });
+        });
+
+        $("#wheelccw" + num).bind("click", function () {
+            dgrop.attr("transform", function (d, i) {
+                d.r = d.r + 15;
+                actor_rot[num] = d.r;
+                return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
             });
         });
 
         $("#big" + num).bind("click", function () {
             dgrop.attr("transform", function (d, i) {
                 d.scale = d.scale * 1.2;
-                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+                actor_scale[num] = d.scale;
+                return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
             });
         });
 
         $("#small" + num).bind("click", function () {
             dgrop.attr("transform", function (d, i) {
                 d.scale = d.scale * 0.8;
-                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " 160 160),scale(" + d.scale + "," + d.scale + ")";
+                actor_scale[num] = d.scale;
+                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
             });
         });
     }
