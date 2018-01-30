@@ -224,7 +224,7 @@ function update_picture() {
     // Background
     var img = $("#places").val();
     if (img != "") {
-        d3.select("svg").append("svg:image")
+        d3.select("#svg").append("svg:image")
             .attr("xlink:href", img)
             .attr("x", "0")
             .attr("y", "0")
@@ -240,7 +240,7 @@ function update_picture() {
     if (actor1_img != "") {
         imageAnimation.init(0, "#svg", actor1_img, "1");
 
-        d3.select("svg").append("text")
+        d3.select("#svg").append("text")
             .attr("x", actor_title_pos["1"][0])
             .attr("y", actor_title_pos["1"][1])
             .text(actor1_name)
@@ -257,7 +257,7 @@ function update_picture() {
     if (actor2_img != "") {
         imageAnimation.init(0, "#svg", actor2_img, "2");
 
-        d3.select("svg").append("text")
+        d3.select("#svg").append("text")
             .attr("x", actor_title_pos["2"][0])
             .attr("y", actor_title_pos["2"][1])
             .text(actor2_name)
@@ -273,7 +273,7 @@ function update_picture() {
     //TODO: get font from another combo box
     var font = "sans-serif";
 
-    d3.select("svg").append("text")
+    d3.select("#svg").append("text")
         .attr("x", 100)
         .attr("y", 100)
         .text(txt)
@@ -290,7 +290,7 @@ function update_picture() {
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
     var font = "sans-serif";
-    d3.select("svg").append("text")
+    d3.select("#svg").append("text")
         .attr("x", 100)
         .attr("y", 100)
         .text(txtdirect)
