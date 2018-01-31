@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Steven Spielberg';
+    src: url('../fonts/Steven Spielberg/Adventure.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Georges Romero';
+    src: url('../fonts/Georges Romero/Beware of the Zombies.ttf') format('truetype');
+}
+
+/* A VOUS DE CONTINUER ! */
+
+#preview {
+    font-size: 40px;
+    cursor: move;
+    color: #eee;
+}

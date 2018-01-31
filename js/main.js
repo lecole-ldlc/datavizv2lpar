@@ -6,6 +6,7 @@ var font = "Arial";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
+var title_pos = [100, 100];
 var actor_rot = {
     "1": 0,
     "2": 0,
@@ -174,7 +175,9 @@ function showInfo(dataf, tabletop) {
         });
 
     $("#directors").on("change", function () {
-        var fonttitle = $("#fonts").val();
+        var dir = $("#directors :selected").text();
+        $("#preview").html(dir);
+        $("#preview").css("font-family", dir);
         update_picture();
     });
 
@@ -211,7 +214,9 @@ function dragstarted(d) {
 }
 
 function dragged(d) {
-    d3.select("text").attr("x", d3.event.x).attr("y", d3.event.y);
+    title_pos[0] += d3.event.dx;
+    title_pos[1] += d3.event.dy;
+    d3.select(this).attr("x", title_pos[0]).attr("y", title_pos[1]);
 }
 
 function dragended(d) {
@@ -234,6 +239,13 @@ function update_picture() {
 
     }
 
+    var font = $("#directors :selected").text();
+    if (font == "") {
+        font = "Arial";
+    }
+    console.log("Director font: ", font);
+
+
     //actor 1
     var actor1_img = $("#actor_cb1 :selected").val();
     var actor1_name = $("#actor_cb1 option:selected").text();
@@ -247,7 +259,7 @@ function update_picture() {
             .text(actor1_name)
             .attr("id", "actor1_txt")
             .attr("class", "actor_txt")
-            .attr("font-family", "Arial")
+            .attr("font-family", font)
             .attr("font-size", "15px")
 
     }
@@ -265,23 +277,21 @@ function update_picture() {
             .text(actor2_name)
             .attr("id", "actor2_txt")
             .attr("class", "actor2_txt")
-            .attr("font-family", "Arial")
+            .attr("font-family", font)
             .attr("font-size", "15px")
 
     }
 
     // Title
     var txt = $("#title").val();
-
-    //TODO: get font from another combo box
-
-
     d3.select("#svg").append("text")
-        .attr("x", 200)
-        .attr("y", 100)
+        .attr("x", title_pos[0])
+        .attr("y", title_pos[1])
         .text(txt)
         .attr("font-family", font)
-        .attr("font-size", "50px")
+        .attr("class", "main_title")
+        .on("mouseenter.hover", tmouseenter)
+        .on("mouseleave.hover", tend)
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -292,7 +302,6 @@ function update_picture() {
     $("#director_txt").remove();
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
-    var font = "sans-serif";
     d3.select("#svg").append("text")
         .attr("x", 200)
         .attr("y", 700)
@@ -445,26 +454,34 @@ function draw_itsf(itsf_value) {
     c.append("text")
         .attr("x", 10)
         .attr("y", function (d) {
-            return y(d)-5;
+            return y(d) - 5;
         })
         .transition()
         .duration(200)
         .attr("stroke", "#fff")
-        .text(function(d){
+        .text(function (d) {
             return d + " %";
         })
 
 
-
-
 }
-function mouseenter () {
+
+function mouseenter() {
     d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
 }
+
 function end() {
     var el = d3.select(this),
         d = el.datum();
     el.style("stroke-width", 0).style("fill", d.color).style('cursor', 'default');
+}
+
+function tmouseenter() {
+    d3.select(this).style('cursor', 'move');
+}
+
+function tend() {
+    d3.select(this).style('cursor', 'default');
 }
 draw_itsf(0);
 
