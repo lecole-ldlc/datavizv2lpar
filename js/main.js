@@ -383,7 +383,7 @@ function draw_itsf(itsf_value) {
         .attr("y", function (d) {
             return y(d);
         })
-        .attr("fill", "#adadad")
+        .attr("fill", "#0084ff")
         .attr("height", function (d) {
             return height - y(d);
         });
@@ -398,6 +398,10 @@ function draw_itsf(itsf_value) {
         .text(function(d){
             return d + " %";
         })
+
+
+
+
 }
 
 draw_itsf(0);
