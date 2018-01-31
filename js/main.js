@@ -27,8 +27,8 @@ var actor_pos = {
 };
 
 var actor_title_pos = {
-    "1": [100, 400],
-    "2": [400, 400]
+    "1": [100, 720],
+    "2": [400, 720]
 };
 
 function init() {
@@ -248,7 +248,8 @@ function update_picture() {
             .attr("id", "actor1_txt")
             .attr("class", "actor_txt")
             .attr("font-family", "Arial")
-            .attr("font-size", "30px")
+            .attr("font-size", "15px")
+
     }
     //actor 2
     var actor2_img = $("#actor_cb2 :selected").val();
@@ -265,7 +266,8 @@ function update_picture() {
             .attr("id", "actor2_txt")
             .attr("class", "actor2_txt")
             .attr("font-family", "Arial")
-            .attr("font-size", "30px")
+            .attr("font-size", "15px")
+
     }
 
     // Title
@@ -275,11 +277,11 @@ function update_picture() {
 
 
     d3.select("#svg").append("text")
-        .attr("x", 100)
+        .attr("x", 200)
         .attr("y", 100)
         .text(txt)
         .attr("font-family", font)
-        .attr("font-size", "30px")
+        .attr("font-size", "50px")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -292,12 +294,12 @@ function update_picture() {
     console.log(txtdirect);
     var font = "sans-serif";
     d3.select("#svg").append("text")
-        .attr("x", 100)
-        .attr("y", 100)
+        .attr("x", 200)
+        .attr("y", 700)
         .text(txtdirect)
         .attr("id", "director_txt")
         .attr("font-family", font)
-        .attr("font-size", "30px");
+        .attr("font-size", "20px");
 
 }
 
@@ -343,6 +345,8 @@ var imageAnimation = new function () {
                 console.log(d);
                 return "translate(" + actor_pos[num][0] + "," + actor_pos[num][1] + "), rotate(" + actor_rot[num] + " " + d.pivot_x + " " + d.pivot_y + "), scale(" + actor_scale[num] + ", " + actor_scale[num] + ")"
             })
+            .on("mouseenter.hover", mouseenter)
+            .on("mouseleave.hover", end)
             .call(drag);
 
         $("#wheel" + num).bind("click", function () {
@@ -450,6 +454,14 @@ function draw_itsf(itsf_value) {
             return d + " %";
         })
 }
-
+function mouseenter () {
+    d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
+}
+function end() {
+    var el = d3.select(this),
+        d = el.datum();
+    el.style("stroke-width", 0).style("fill", d.color).style('cursor', 'default');
+}
 draw_itsf(0);
+
 window.addEventListener('DOMContentLoaded', init);
