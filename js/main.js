@@ -43,6 +43,7 @@ function init() {
 var data;
 var directors = [];
 var actors = [];
+var places = [];
 
 function add_titles(a, title_start, title_end) {
     console.log(a);
@@ -86,7 +87,7 @@ function showInfo(dataf, tabletop) {
 
     data = dataf;
 
-    var places = [];
+    places = [];
     data.forEach(function (d) {
         if (d["type"] == "places") {
             places.push(d);
@@ -205,6 +206,10 @@ function showInfo(dataf, tabletop) {
         var title = generate_title();
         $("#title").val(title);
         console.log(title);
+    });
+
+    $("#random_affiche").click(function () {
+        random_affiche();
     })
 
 }
@@ -222,6 +227,43 @@ function dragged(d) {
 function dragended(d) {
     d3.select(this).classed("active", false);
 }
+
+function random_affiche() {
+    var actors_val = actors.map(function (e) {
+        return e.actorsimages;
+    });
+    var directors_val = directors.map(function (e) {
+        return e.elements;
+    });
+    var locations_val = places.map(function (e) {
+        return e.images_url;
+    });
+    var actor1 = "";
+    var actor2 = "";
+    while (actor1.length < 5 || actor2.length < 5) {
+        actor1 = actors_val[Math.floor(Math.random() * actors_val.length)];
+        actor2 = actors_val[Math.floor(Math.random() * actors_val.length)];
+    }
+    var director = "";
+    while (director.length < 5) {
+        director = directors_val[Math.floor(Math.random() * directors_val.length)];
+    }
+    var location = "";
+    while (location.length < 5) {
+        location = locations_val[Math.floor(Math.random() * locations_val.length)];
+    }
+
+    $("#actor_cb1").val(actor1);
+    $("#actor_cb2").val(actor2);
+    $("#directors").val(director);
+    $("#places").val(location);
+
+    var title = generate_title();
+    $("#title").val(title);
+        
+    update_picture();
+}
+
 
 function update_picture() {
     $("#svg").html('');
@@ -385,7 +427,7 @@ var imageAnimation = new function () {
             dgrop.attr("transform", function (d, i) {
                 d.scale = d.scale * 0.8;
                 actor_scale[num] = d.scale;
-                return "translate(" + [d.x, d.y] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
+                return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + "),rotate(" + d.r + " " + d.pivot_x + " " + d.pivot_y + "),scale(" + d.scale + "," + d.scale + ")";
             });
         });
     }
@@ -483,6 +525,7 @@ function tmouseenter() {
 function tend() {
     d3.select(this).style('cursor', 'default');
 }
+
 draw_itsf(0);
 
 window.addEventListener('DOMContentLoaded', init);
