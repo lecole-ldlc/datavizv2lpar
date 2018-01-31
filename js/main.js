@@ -27,8 +27,8 @@ var actor_pos = {
 };
 
 var actor_title_pos = {
-    "1": [100, 400],
-    "2": [400, 400]
+    "1": [100, 720],
+    "2": [400, 720]
 };
 
 function init() {
@@ -39,9 +39,51 @@ function init() {
     })
 }
 
-function showInfo(data, tabletop) {
+var data;
+var directors = [];
+var actors = [];
+
+function add_titles(a, title_start, title_end) {
+    console.log(a);
+    title_start.push(a.movie_title_start);
+    title_start.push(a.movie_title_start2);
+    title_start.push(a.movie_title_start3);
+    title_end.push(a.movite_title_end);
+    title_end.push(a.movite_title_end2);
+    title_end.push(a.movite_title_end3);
+}
+
+function generate_title() {
+
+    var actor1_id = $("#actor_cb1 option:selected").attr("data-id");
+    var actor2_id = $("#actor_cb2 option:selected").attr("data-id");
+    var director_id = $("#directors option:selected").attr("data-id");
+
+    var title_start = [];
+    var title_end = [];
+    if (actor1_id) {
+        add_titles(actors[actor1_id], title_start, title_end);
+    }
+    if (actor2_id) {
+        add_titles(actors[actor2_id], title_start, title_end);
+    }
+    if (director_id) {
+        add_titles(directors[director_id], title_start, title_end);
+    }
+    if (title_start.length > 1 && title_end.length > 1) {
+        var tstart = title_start[Math.floor(Math.random() * title_start.length)];
+        var tend = title_end[Math.floor(Math.random() * title_end.length)];
+        return tstart + " " + tend;
+    } else {
+        return "Génération impossible ! sélectionner des acteurs/réalisateur !";
+    }
+}
+
+function showInfo(dataf, tabletop) {
     //console.log('Successfully processed!')
     //console.log(data);
+
+    data = dataf;
 
     var places = [];
     data.forEach(function (d) {
@@ -65,7 +107,6 @@ function showInfo(data, tabletop) {
             return d.scoresf;
         });
 
-    var actors = [];
     data.forEach(function (d) {
         if (d["type"] == "actors") {
             actors.push(d);
@@ -85,6 +126,9 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
     d3.select("#actor_cb2").selectAll("option")
@@ -99,11 +143,12 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
-
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
 
-    var directors = [];
     data.forEach(function (d) {
         if (d["type"] == "directors") {
             directors.push(d);
@@ -123,9 +168,13 @@ function showInfo(data, tabletop) {
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
+        })
+        .attr("data-id", function (d, i) {
+            return i;
         });
 
     $("#directors").on("change", function () {
+        var fonttitle = $("#fonts").val();
         update_picture();
     });
 
@@ -149,6 +198,11 @@ function showInfo(data, tabletop) {
         update_picture()
     });
 
+    $("#refresh").click(function () {
+        var title = generate_title();
+        $("#title").val(title);
+        console.log(title);
+    })
 
 }
 
@@ -194,7 +248,8 @@ function update_picture() {
             .attr("id", "actor1_txt")
             .attr("class", "actor_txt")
             .attr("font-family", "Arial")
-            .attr("font-size", "30px")
+            .attr("font-size", "15px")
+
     }
     //actor 2
     var actor2_img = $("#actor_cb2 :selected").val();
@@ -211,21 +266,22 @@ function update_picture() {
             .attr("id", "actor2_txt")
             .attr("class", "actor2_txt")
             .attr("font-family", "Arial")
-            .attr("font-size", "30px")
+            .attr("font-size", "15px")
+
     }
 
     // Title
     var txt = $("#title").val();
 
     //TODO: get font from another combo box
-    var font = "sans-serif";
 
-    d3.select("svg").append("text")
-        .attr("x", 100)
+
+    d3.select("#svg").append("text")
+        .attr("x", 200)
         .attr("y", 100)
         .text(txt)
         .attr("font-family", font)
-        .attr("font-size", "30px")
+        .attr("font-size", "50px")
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -237,13 +293,13 @@ function update_picture() {
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
     var font = "sans-serif";
-    d3.select("svg").append("text")
-        .attr("x", 100)
-        .attr("y", 100)
+    d3.select("#svg").append("text")
+        .attr("x", 200)
+        .attr("y", 700)
         .text(txtdirect)
         .attr("id", "director_txt")
         .attr("font-family", font)
-        .attr("font-size", "30px");
+        .attr("font-size", "20px");
 
 }
 
@@ -261,10 +317,7 @@ var imageAnimation = new function () {
 
         drag = d3.drag()
             .on("drag", function (d, i) {
-                console.log(d.x, d.y);
-                d3.select(this).attr("transform", function (dd, i) {
-                    console.log(d.num);
-                    console.log(actor_pos[dd.num]);
+                d3.select(this).attr("transform", function (d, i) {
                     actor_pos[d.num][0] += d3.event.dx;
                     actor_pos[d.num][1] += d3.event.dy;
                     return "translate(" + [actor_pos[d.num][0], actor_pos[d.num][1]] + ")," +
@@ -275,7 +328,7 @@ var imageAnimation = new function () {
 
         console.log(actor_pos[num][0], actor_pos[num][1]);
         dgrop = d3.select(id).append("g")
-            .data([{"num": num, "x": 0, "y": 0, "r": 0, "scale": 1, "pivot_x": 160, "pivot_y": 160}])
+            .data([{"num": num, "x": 0, "y": 0, "r": actor_rot[num], "scale": actor_scale[num], "pivot_x": 160, "pivot_y": 160}])
             .attr("x", 0)
             .attr("y", 0)
             .attr("transform", function (d) {
@@ -289,9 +342,11 @@ var imageAnimation = new function () {
             .attr("height", 320)
             .attr("xlink:href", img)
             .attr("transform", function (d) {
-                console.log(d.x, d.y, d.num, d.pivot_x, d.pivot_y);
+                console.log(d);
                 return "translate(" + actor_pos[num][0] + "," + actor_pos[num][1] + "), rotate(" + actor_rot[num] + " " + d.pivot_x + " " + d.pivot_y + "), scale(" + actor_scale[num] + ", " + actor_scale[num] + ")"
             })
+            .on("mouseenter.hover", mouseenter)
+            .on("mouseleave.hover", end)
             .call(drag);
 
         $("#wheel" + num).bind("click", function () {
@@ -403,6 +458,14 @@ function draw_itsf(itsf_value) {
 
 
 }
-
+function mouseenter () {
+    d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
+}
+function end() {
+    var el = d3.select(this),
+        d = el.datum();
+    el.style("stroke-width", 0).style("fill", d.color).style('cursor', 'default');
+}
 draw_itsf(0);
+
 window.addEventListener('DOMContentLoaded', init);
