@@ -174,6 +174,7 @@ function showInfo(dataf, tabletop) {
         });
 
     $("#directors").on("change", function () {
+        var fonttitle = $("#fonts").val();
         update_picture();
     });
 
@@ -271,7 +272,7 @@ function update_picture() {
     var txt = $("#title").val();
 
     //TODO: get font from another combo box
-    var font = "sans-serif";
+
 
     d3.select("#svg").append("text")
         .attr("x", 100)
