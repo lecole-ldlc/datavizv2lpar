@@ -171,7 +171,7 @@ function update_picture() {
     // Background
     var img = $("#places").val();
     if (img != "") {
-        d3.select("svg").append("svg:image")
+        d3.select("#svg").append("svg:image")
             .attr("xlink:href", img)
             .attr("x", "0")
             .attr("y", "0")
@@ -187,7 +187,7 @@ function update_picture() {
     if (actor1_img != "") {
         imageAnimation.init(0, "#svg", actor1_img, "1");
 
-        d3.select("svg").append("text")
+        d3.select("#svg").append("text")
             .attr("x", actor_title_pos["1"][0])
             .attr("y", actor_title_pos["1"][1])
             .text(actor1_name)
@@ -204,7 +204,7 @@ function update_picture() {
     if (actor2_img != "") {
         imageAnimation.init(0, "#svg", actor2_img, "2");
 
-        d3.select("svg").append("text")
+        d3.select("#svg").append("text")
             .attr("x", actor_title_pos["2"][0])
             .attr("y", actor_title_pos["2"][1])
             .text(actor2_name)
@@ -334,5 +334,71 @@ $('select').change(function () {
         sum += parseInt($(this).attr("data-sf"));
     });
     $("#sum").html("SUM " + sum);
+    draw_itsf(sum)
 });
+
+function draw_itsf(itsf_value) {
+    $("#barchart").html("");
+    // set the dimensions and margins of the graph
+    var margin = {top: 20, right: 10, bottom: 0, left: 10},
+        width = 50,
+        height = 833;
+
+    // set the ranges
+    var x = d3.scaleBand()
+        .range([0, width])
+        .padding(0);
+    var y = d3.scaleLinear()
+        .range([height, 0]);
+
+
+    // append the svg object to the body of the page
+    // append a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg = d3.select("#barchart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+
+    // format the data
+
+    // Scale the range of the data in the domains
+    x.domain([0]);
+    y.domain([0, 100]);
+
+    // append the rectangles for the bar chart
+    var c = svg.selectAll(".bar")
+        .data([itsf_value])
+        .enter()
+
+    c.append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) {
+            return 0;
+        })
+        .attr("width", x.bandwidth())
+        .attr("y", function (d) {
+            return y(d);
+        })
+        .attr("fill", "#adadad")
+        .attr("height", function (d) {
+            return height - y(d);
+        });
+    c.append("text")
+        .attr("x", 10)
+        .attr("y", function (d) {
+            return y(d)-5;
+        })
+        .transition()
+        .duration(200)
+        .attr("stroke", "#fff")
+        .text(function(d){
+            return d + " %";
+        })
+}
+
+draw_itsf(0);
 window.addEventListener('DOMContentLoaded', init);
