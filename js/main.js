@@ -45,6 +45,24 @@ var directors = [];
 var actors = [];
 var places = [];
 
+function generatesideinfos() {
+    d3.select("#svg").append("text")
+        .attr("x", 320)
+        .attr("y", 35)
+        .attr("id", "sideinfos_txt")
+        .text("La Planche à Repasser présente : ")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("fill", white)
+        .attr("align", "center")
+        .attr("text-anchor", "middle")
+        .style("fill", white)
+        .style("stroke", '#000');
+
+
+}
+
 function add_titles(a, title_start, title_end) {
     title_start.push(a.movie_title_start);
     title_start.push(a.movie_title_start2);
@@ -64,7 +82,7 @@ function wrap(text, width) {
             word,
             line = [],
             lineNumber = 0,
-            lineHeight = 1.1, // ems
+            lineHeight = 1.0, // ems
             y = text.attr("y"),
             dy = 0,
             tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
@@ -412,6 +430,7 @@ function update_picture() {
         d3.select(this).style("stroke", '#000');
     });
     update_itsf();
+    generatesideinfos();
 }
 
 var imageAnimation = new function () {
@@ -535,8 +554,7 @@ function draw_itsf(itsf_value) {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom - 57)
         .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
     // format the data
@@ -602,5 +620,6 @@ function update(jscolor) {
 }
 
 draw_itsf(0);
+
 
 window.addEventListener('DOMContentLoaded', init);
