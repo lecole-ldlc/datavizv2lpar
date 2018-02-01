@@ -78,3 +78,5 @@ body{
     width: auto;
     height: available;
 }
+
+.help {cursor: help;}
