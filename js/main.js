@@ -212,6 +212,15 @@ function showInfo(dataf, tabletop) {
         random_affiche();
     })
 
+    $("#color_picker").on("change", function(){
+       var color = $("#color_picker").val();
+       $(".color_text").each(function(e){
+           d3.select(this).style("fill", color);
+           d3.select(this).style("stroke", '#000');
+       });
+       console.log(color);
+    });
+
 }
 
 function dragstarted(d) {
@@ -260,7 +269,7 @@ function random_affiche() {
 
     var title = generate_title();
     $("#title").val(title);
-        
+
     update_picture();
 }
 
@@ -300,10 +309,10 @@ function update_picture() {
             .attr("y", actor_title_pos["1"][1])
             .text(actor1_name)
             .attr("id", "actor1_txt")
-            .attr("class", "actor_txt")
+            .attr("class", "actor_txt color_text")
             .attr("font-family", font)
             .attr("font-size", "30px")
-        .attr("text-anchor", "middle")
+            .attr("text-anchor", "middle")
 
     }
     //actor 2
@@ -319,10 +328,10 @@ function update_picture() {
             .attr("y", actor_title_pos["2"][1])
             .text(actor2_name)
             .attr("id", "actor2_txt")
-            .attr("class", "actor2_txt")
+            .attr("class", "actor2_txt color_text")
             .attr("font-family", font)
             .attr("font-size", "30px")
-        .attr("text-anchor", "middle")
+            .attr("text-anchor", "middle")
 
     }
 
@@ -333,7 +342,7 @@ function update_picture() {
         .attr("y", title_pos[1])
         .text(txt)
         .attr("font-family", font)
-        .attr("class", "main_title")
+        .attr("class", "main_title color_text")
         .on("mouseenter.hover", tmouseenter)
         .on("mouseleave.hover", tend)
         .call(d3.drag()
@@ -352,10 +361,18 @@ function update_picture() {
         .attr("y", 755)
         .text(txtdirect)
         .attr("id", "director_txt")
+        .attr("class", "director_text color_text")
         .attr("font-family", font)
         .attr("font-size", "42px")
-        .attr("align","center")
-        .attr("text-anchor", "middle")
+        .attr("align", "center")
+        .attr("text-anchor", "middle");
+
+    var color = $("#color_picker").val();
+    $(".color_text").each(function(e){
+        d3.select(this).style("fill", color);
+        d3.select(this).style("stroke", '#000');
+    });
+    console.log(color);
 }
 
 var imageAnimation = new function () {
@@ -383,7 +400,15 @@ var imageAnimation = new function () {
 
         console.log(actor_pos[num][0], actor_pos[num][1]);
         dgrop = d3.select(id).append("g")
-            .data([{"num": num, "x": 0, "y": 0, "r": actor_rot[num], "scale": actor_scale[num], "pivot_x": 160, "pivot_y": 160}])
+            .data([{
+                "num": num,
+                "x": 0,
+                "y": 0,
+                "r": actor_rot[num],
+                "scale": actor_scale[num],
+                "pivot_x": 160,
+                "pivot_y": 160
+            }])
             .attr("x", 0)
             .attr("y", 0)
             .attr("transform", function (d) {
@@ -531,9 +556,9 @@ function tend() {
 }
 
 
-    function update(jscolor) {
-        document.getElementsByTagName('body').style.Backgroundcolor = '#' + jscolor
-    }
+function update(jscolor) {
+    document.getElementsByTagName('body').style.color = '#' + jscolor
+}
 
 draw_itsf(0);
 
