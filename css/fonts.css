@@ -8,6 +8,46 @@
     src: url('../fonts/Georges Romero/Beware of the Zombies.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Tim Burton';
+    src: url('../fonts/Tim Burton/Alice_in_Wonderland_3.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Michael Bay';
+    src: url('../fonts/Michael Bay/Megatron.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Stanley Kubrick';
+    src: url('../fonts/Stanley Kubrick/antilles.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Georges Lucas';
+    src: url('../fonts/Georges Lucas/Starjedi.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'J.J. Abrams';
+    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ridley Scott';
+    src: url('../fonts/Ridley Scott/BLADRMF_ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'James Cameron';
+    src: url('../fonts/James Cameron/terminator real nfi.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Luc Besson';k
+    src: url('../fonts/Luc Besson/#######') format('truetype');
+}
+
 /* A VOUS DE CONTINUER ! */
 
 #preview {
