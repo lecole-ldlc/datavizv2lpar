@@ -10,6 +10,7 @@
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-colorpicker.css" rel="stylesheet">
 
     <link href="css/custom.css" rel="stylesheet" type="text/css">
 </head>
@@ -138,14 +139,21 @@
                 <div class="row">
                     <div class="form-group col-8">
                         <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
+
+
                     </div>
+
                     <div class="form-group  col-4">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-primary" id="place_text">Go</button>
                         </div>
                     </div>
                 </div>
+                <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
+                    Pick text color
+                </button>
 
+                HEX value: <input id="chosen-value" value="000000">
 
 
                 <div class="row">
@@ -208,8 +216,12 @@
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src='js/bootstrap.bundle.min.js'></script>
-
-
+<script src="js/jscolor.js"></script>
+<script>
+    function setTextColor(picker) {
+        document.getElementsByTagName('body')[0].style.color = '#' + picker.toString()
+    }
+</script>
 <script src="js/main.js"></script>
 
 <script src="js/modal.js"></script>
