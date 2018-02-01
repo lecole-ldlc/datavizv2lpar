@@ -446,7 +446,7 @@ $('select').change(function () {
 function draw_itsf(itsf_value) {
     $("#barchart").html("");
     // set the dimensions and margins of the graph
-    var margin = {top: 20, right: 10, bottom: 0, left: 10},
+    var margin = {top: 20, right: 0, bottom: 0, left: 0},
         width = 50,
         height = 833;
 
