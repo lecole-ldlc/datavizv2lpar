@@ -22,25 +22,25 @@
 
 
 <!--Dataviz-->
-<div style="background-color: #adadad" class="jumbotron">
+<div style="background-color: #adadad ; padding-top: 0px" class="jumbotron">
     <!--Jauge, SVG, Selecteurs-->
-    <div class="row" style="padding-bottom: 15px">
+    <div class="row">
 
         <div class="col-1"></div>
-        <div class="col-10">
+        <div class="col-6">
             <button id="random_affiche" class="btn btn-primary"
                     style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une
                 affiche au hasard
             </button>
         </div>
-        <div class="col-1"></div>
+        <div class="col-5"></div>
     </div>
     <div class="row">
 
         <!--Jauge-->
         <div class="col-1">
             <div class="jumbotron">
-                <div class="center-block">
+                <div title="Mesure le pourcentage de sciencefictionnalité de ton film !" class="center-block">
                     <svg id="barchart"></svg>
                 </div>
             </div>
@@ -49,8 +49,9 @@
         <!--SVG-->
         <div class="col-6">
             <div class="affiche">
-                <svg width="640" height="833" id="svg"></svg>
+                <svg width="640" height="833" id="svg" style="margin-top: 0"></svg>
             </div>
+
             <!--Synopsis
             <div style="margin-top: 12px" class="jumbotron">
                 <h2 style="color: white">Synopsis
