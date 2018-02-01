@@ -94,6 +94,8 @@ function showInfo(dataf, tabletop) {
         }
     });
 
+    places.push(places[0]);
+
     var options = d3.select("#places").selectAll("option")
         .data(places)
         .enter()
@@ -102,8 +104,8 @@ function showInfo(dataf, tabletop) {
             return d.elements;
         })
         .attr("value", function (d) {
+            $("#preload").append("<img src='" + d.images_url + "'>");
             return d.images_url;
-
         })
         .attr("data-sf", function (d) {
             return d.scoresf;
@@ -115,14 +117,17 @@ function showInfo(dataf, tabletop) {
         }
     });
 
+    actors.push(actors[0]);
     d3.select("#actor_cb1").selectAll("option")
         .data(actors)
         .enter()
         .append("option")
         .text(function (d) {
+            console.log(d.elements);
             return d.elements;
         })
         .attr("value", function (d) {
+            $("#preload").append("<img src='" + d.actorsimages + "'>");
             return d.actorsimages;
 
         })
@@ -156,6 +161,8 @@ function showInfo(dataf, tabletop) {
             directors.push(d);
         }
     });
+
+    directors.push(directors[0]);
 
     var options = d3.select("#directors").selectAll("option")
         .data(directors)
@@ -205,20 +212,24 @@ function showInfo(dataf, tabletop) {
     $("#refresh").click(function () {
         var title = generate_title();
         $("#title").val(title);
-        console.log(title);
+        update_picture();
+    });
+
+    $("#title").on("keyup", function () {
+        update_picture();
     });
 
     $("#random_affiche").click(function () {
         random_affiche();
     })
 
-    $("#color_picker").on("change", function(){
-       var color = $("#color_picker").val();
-       $(".color_text").each(function(e){
-           d3.select(this).style("fill", color);
-           d3.select(this).style("stroke", '#000');
-       });
-       console.log(color);
+    $("#color_picker").on("change", function () {
+        var color = $("#color_picker").val();
+        $(".color_text").each(function (e) {
+            d3.select(this).style("fill", color);
+            d3.select(this).style("stroke", '#000');
+        });
+        console.log(color);
     });
 
 }
@@ -262,6 +273,9 @@ function random_affiche() {
         location = locations_val[Math.floor(Math.random() * locations_val.length)];
     }
 
+    console.log(location);
+    console.log(director);
+
     $("#actor_cb1").val(actor1);
     $("#actor_cb2").val(actor2);
     $("#directors").val(director);
@@ -287,7 +301,6 @@ function update_picture() {
             .attr("y", "0")
             .attr("width", "640")
             .attr("height", "833");
-
     }
 
     var font = $("#directors :selected").text();
@@ -300,10 +313,22 @@ function update_picture() {
     //actor 1
     var actor1_img = $("#actor_cb1 :selected").val();
     var actor1_name = $("#actor_cb1 option:selected").text();
-    console.log("Actor1 " + actor2_img);
+
+    var actor2_img = $("#actor_cb2 :selected").val();
+    var actor2_name = $("#actor_cb2 option:selected").text();
+
+    var txtdirect = $("#directors").val();
+
+    // Images of actors
     if (actor1_img != "") {
         imageAnimation.init(0, "#svg", actor1_img, "1");
+    }
+    if (actor2_img != "") {
+        imageAnimation.init(0, "#svg", actor2_img, "2");
+    }
 
+    // Texts of actors
+    if (actor1_img != "") {
         d3.select("#svg").append("text")
             .attr("x", actor_title_pos["1"][0])
             .attr("y", actor_title_pos["1"][1])
@@ -313,16 +338,9 @@ function update_picture() {
             .attr("font-family", font)
             .attr("font-size", "30px")
             .attr("text-anchor", "middle")
-
     }
-    //actor 2
-    var actor2_img = $("#actor_cb2 :selected").val();
-    var actor2_name = $("#actor_cb2 option:selected").text();
-    console.log("Actor2 " + actor2_img);
 
     if (actor2_img != "") {
-        imageAnimation.init(0, "#svg", actor2_img, "2");
-
         d3.select("#svg").append("text")
             .attr("x", actor_title_pos["2"][0])
             .attr("y", actor_title_pos["2"][1])
@@ -332,7 +350,6 @@ function update_picture() {
             .attr("font-family", font)
             .attr("font-size", "30px")
             .attr("text-anchor", "middle")
-
     }
 
     // Title
@@ -354,8 +371,7 @@ function update_picture() {
 
     // Director
     $("#director_txt").remove();
-    var txtdirect = $("#directors").val();
-    console.log(txtdirect);
+
     d3.select("#svg").append("text")
         .attr("x", 320)
         .attr("y", 755)
@@ -368,11 +384,12 @@ function update_picture() {
         .attr("text-anchor", "middle");
 
     var color = $("#color_picker").val();
-    $(".color_text").each(function(e){
+    $(".color_text").each(function (e) {
         d3.select(this).style("fill", color);
         d3.select(this).style("stroke", '#000');
     });
     console.log(color);
+    update_itsf();
 }
 
 var imageAnimation = new function () {
@@ -462,14 +479,19 @@ var imageAnimation = new function () {
     }
 
 };
-$('select').change(function () {
+
+function update_itsf() {
     var sum = 0;
     $('select :selected').each(function () {
         //console.log($(this), parseFloat($(this).attr("data-sf")));
         sum += parseInt($(this).attr("data-sf"));
     });
     $("#sum").html("SUM " + sum);
-    draw_itsf(sum)
+    draw_itsf(sum);
+}
+
+$('select').change(function () {
+    update_itsf();
 });
 
 function draw_itsf(itsf_value) {
