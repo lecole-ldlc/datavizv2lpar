@@ -46,13 +46,41 @@ var actors = [];
 var places = [];
 
 function add_titles(a, title_start, title_end) {
-    console.log(a);
     title_start.push(a.movie_title_start);
     title_start.push(a.movie_title_start2);
     title_start.push(a.movie_title_start3);
     title_end.push(a.movite_title_end);
     title_end.push(a.movite_title_end2);
     title_end.push(a.movite_title_end3);
+}
+
+function wrap(text, width) {
+    console.log("WRAP");
+    console.log(text);
+    text.each(function () {
+        console.log("Consider", this);
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = 0,
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            console.log("Process",word);
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                console.log(lineNumber);
+                tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", (++lineNumber * lineHeight + dy) + "em").text(word);
+            }
+        }
+    });
 }
 
 function generate_title() {
@@ -123,7 +151,6 @@ function showInfo(dataf, tabletop) {
         .enter()
         .append("option")
         .text(function (d) {
-            console.log(d.elements);
             return d.elements;
         })
         .attr("value", function (d) {
@@ -229,7 +256,6 @@ function showInfo(dataf, tabletop) {
             d3.select(this).style("fill", color);
             d3.select(this).style("stroke", '#000');
         });
-        console.log(color);
     });
 
 }
@@ -241,7 +267,7 @@ function dragstarted(d) {
 function dragged(d) {
     title_pos[0] += d3.event.dx;
     title_pos[1] += d3.event.dy;
-    d3.select(this).attr("x", title_pos[0]).attr("y", title_pos[1]);
+    d3.select(this).attr("transform", "translate("+title_pos[0] + " " + title_pos[1] +")");
 }
 
 function dragended(d) {
@@ -273,9 +299,6 @@ function random_affiche() {
         location = locations_val[Math.floor(Math.random() * locations_val.length)];
     }
 
-    console.log(location);
-    console.log(director);
-
     $("#actor_cb1").val(actor1);
     $("#actor_cb2").val(actor2);
     $("#directors").val(director);
@@ -291,7 +314,6 @@ function random_affiche() {
 function update_picture() {
     $("#svg").html('');
 
-    console.log("update picture");
     // Background
     var img = $("#places").val();
     if (img != "") {
@@ -307,8 +329,6 @@ function update_picture() {
     if (font == "") {
         font = "Arial";
     }
-    console.log("Director font: ", font);
-
 
     //actor 1
     var actor1_img = $("#actor_cb1 :selected").val();
@@ -354,19 +374,22 @@ function update_picture() {
 
     // Title
     var txt = $("#title").val();
-    d3.select("#svg").append("text")
-        .attr("x", title_pos[0])
-        .attr("y", title_pos[1])
+    var title_g = d3.select("#svg").append("g")
+        .attr("transform", "translate(" + title_pos[0] + " " + title_pos[1] + ")")
+        .attr("class", "title_g")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    title_g.append("text")
         .text(txt)
         .attr("font-family", font)
         .attr("class", "main_title color_text")
         .on("mouseenter.hover", tmouseenter)
         .on("mouseleave.hover", tend)
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended))
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .call(wrap, 300);
 
 
     // Director
@@ -388,7 +411,6 @@ function update_picture() {
         d3.select(this).style("fill", color);
         d3.select(this).style("stroke", '#000');
     });
-    console.log(color);
     update_itsf();
 }
 
@@ -415,7 +437,6 @@ var imageAnimation = new function () {
                 })
             });
 
-        console.log(actor_pos[num][0], actor_pos[num][1]);
         dgrop = d3.select(id).append("g")
             .data([{
                 "num": num,
@@ -439,7 +460,6 @@ var imageAnimation = new function () {
             .attr("height", 320)
             .attr("xlink:href", img)
             .attr("transform", function (d) {
-                console.log(d);
                 return "translate(" + actor_pos[num][0] + "," + actor_pos[num][1] + "), rotate(" + actor_rot[num] + " " + d.pivot_x + " " + d.pivot_y + "), scale(" + actor_scale[num] + ", " + actor_scale[num] + ")"
             })
             .on("mouseenter.hover", mouseenter)
@@ -483,7 +503,6 @@ var imageAnimation = new function () {
 function update_itsf() {
     var sum = 0;
     $('select :selected').each(function () {
-        //console.log($(this), parseFloat($(this).attr("data-sf")));
         sum += parseInt($(this).attr("data-sf"));
     });
     $("#sum").html("SUM " + sum);
