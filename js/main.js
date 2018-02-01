@@ -6,7 +6,7 @@ var font = "Arial";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
-var title_pos = [100, 100];
+var title_pos = [320, 140];
 var actor_rot = {
     "1": 0,
     "2": 0,
@@ -23,13 +23,13 @@ var actor_pos_init = {
 };
 
 var actor_pos = {
-    "1": [0, 0],
-    "2": [0, 0],
+    "1": [0, 400],
+    "2": [320, 400],
 };
 
 var actor_title_pos = {
-    "1": [100, 720],
-    "2": [400, 720]
+    "1": [320, 790],
+    "2": [320, 820]
 };
 
 function init() {
@@ -302,7 +302,8 @@ function update_picture() {
             .attr("id", "actor1_txt")
             .attr("class", "actor_txt")
             .attr("font-family", font)
-            .attr("font-size", "15px")
+            .attr("font-size", "30px")
+        .attr("text-anchor", "middle")
 
     }
     //actor 2
@@ -320,7 +321,8 @@ function update_picture() {
             .attr("id", "actor2_txt")
             .attr("class", "actor2_txt")
             .attr("font-family", font)
-            .attr("font-size", "15px")
+            .attr("font-size", "30px")
+        .attr("text-anchor", "middle")
 
     }
 
@@ -337,7 +339,8 @@ function update_picture() {
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
-            .on("end", dragended));
+            .on("end", dragended))
+        .attr("text-anchor", "middle");
 
 
     // Director
@@ -345,13 +348,14 @@ function update_picture() {
     var txtdirect = $("#directors").val();
     console.log(txtdirect);
     d3.select("#svg").append("text")
-        .attr("x", 200)
-        .attr("y", 700)
+        .attr("x", 320)
+        .attr("y", 755)
         .text(txtdirect)
         .attr("id", "director_txt")
         .attr("font-family", font)
-        .attr("font-size", "20px");
-
+        .attr("font-size", "42px")
+        .attr("align","center")
+        .attr("text-anchor", "middle")
 }
 
 var imageAnimation = new function () {

@@ -2,15 +2,16 @@
     background-color: #000759;
     margin-bottom: 10px;
     padding: 15px;
-    box-shadow: inset -1px -1px 8px 2px #000a1c;
+    box-shadow: inset -1px -1px 8px 2px #001223;
 }
 
-.col-1, .col-5, .col-10 {
+.col-1, .col-5, .col-10, .col-6 {
 
     margin-left:auto;
    margin-right:auto;
    display:block;
-    text-align:center
+    text-align:center;
+    background-color: transparent;
 
 }
 
@@ -73,3 +74,7 @@ body{
     font-size: 50px;
 }
 
+#random_affiche {
+    width: auto;
+    height: available;
+}
