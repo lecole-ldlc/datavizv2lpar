@@ -15,12 +15,17 @@
 </head>
 <body>
 <!--Titre et description de la dv-->
-<div class="jumbotron">
-    <h1 style="text-align: center ;color: white">Fais ton film</h1>
-    <p style="text-align: center ;color: white">Je suis une descriptionJe suis une descriptionJe suis une descriptionJe suis une
-        descriptionJe suis une description</p>
-</div>
+<img src="img/banniere.png">
 
+
+<div class="row">
+
+    <div class="col-1" style="background-color: #3a3a3a"></div>
+    <div class="col-10" style="background-color: #3a3a3a">
+        <button id="random_affiche" class="btn btn-primary" style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une affiche au hasard</button>
+    </div>
+    <div class="col-1" style="background-color: #3a3a3a"></div>
+</div>
 <!--Dataviz-->
 <div style="background-color: #adadad" class="jumbotron">
     <!--Jauge, SVG, Selecteurs-->
@@ -31,8 +36,9 @@
         <div style="background-color: #adadad" class="col-1">
             <div class="jumbotron">
                 <div class="center-block">
-                <svg width="50" height="833" id="barchart"></svg>
-</div></div>
+                    <svg width="50" height="833" id="barchart"></svg>
+                </div>
+            </div>
         </div>
 
         <!--SVG-->
@@ -54,13 +60,6 @@
 
             <!--Lieux-->
 
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="form-group col-8">
-                        <button id="random_affiche" class="btn btn-primary">Générer une affiche au hasard</button>
-                    </div>
-                </div>
-            </div>
 
             <div class="jumbotron">
                 <h2 style="color: white">Lieux / Environnements</h2>
@@ -83,10 +82,14 @@
                     </div>
                     <div class="form-group  col-4">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary" id="wheel1"><i class="fa fa-rotate-left"></i></button>
-                            <button type="button" class="btn btn-primary" id="wheelccw1"><i class="fa fa-rotate-right"></i></button>
-                            <button type="button" class="btn btn-primary" id="big1"><i class="fa fa-expand"></i></button>
-                            <button type="button" class="btn btn-primary" id="small1"><i class="fa fa-compress"></i></button>
+                            <button type="button" class="btn btn-primary" id="wheel1"><i class="fa fa-rotate-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="wheelccw1"><i
+                                    class="fa fa-rotate-right"></i></button>
+                            <button type="button" class="btn btn-primary" id="big1"><i class="fa fa-expand"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="small1"><i class="fa fa-compress"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -102,10 +105,14 @@
                     </div>
                     <div class="form-group  col-4">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary" id="wheel2"><i class="fa fa-rotate-left"></i></button>
-                            <button type="button" class="btn btn-primary" id="wheelccw2"><i class="fa fa-rotate-right"></i></button>
-                            <button type="button" class="btn btn-primary" id="big2"><i class="fa fa-expand"></i></button>
-                            <button type="button" class="btn btn-primary" id="small2"><i class="fa fa-compress"></i></button>
+                            <button type="button" class="btn btn-primary" id="wheel2"><i class="fa fa-rotate-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="wheelccw2"><i
+                                    class="fa fa-rotate-right"></i></button>
+                            <button type="button" class="btn btn-primary" id="big2"><i class="fa fa-expand"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="small2"><i class="fa fa-compress"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -145,7 +152,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <div class="row">
