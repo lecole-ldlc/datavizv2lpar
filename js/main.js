@@ -526,6 +526,11 @@ function tend() {
     d3.select(this).style('cursor', 'default');
 }
 
+
+    function update(jscolor) {
+        document.getElementsByTagName('body').style.Backgroundcolor = '#' + jscolor
+    }
+
 draw_itsf(0);
 
 window.addEventListener('DOMContentLoaded', init);
