@@ -40,13 +40,12 @@
 
 @font-face {
     font-family: 'James Cameron';
-    font-size: 30px;
-    src: url('../fonts/James Cameron/PAPYRUS.ttf') format('truetype');
+    src: url('../fonts/James Cameron/terminator real nfi.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Luc Besson';
-    src: url('../fonts/Luc Besson/StarTrekEnterpriseFuture.ttf') format('truetype');
+    src: url('../fonts/Luc Besson/comics.ttf') format('truetype');
 }
 
 /* A VOUS DE CONTINUER ! */
