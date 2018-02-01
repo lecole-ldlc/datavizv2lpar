@@ -16,38 +16,38 @@
 </head>
 <body>
 <!--Titre et description de la dv-->
-<div class="" style="margin: 0px; padding: 0px " >
-<img src="img/banniere.png" srcset="img/banniere2.png 1000w, img/banniere3.png 2500w" alt="ban">
+<div class="" style="margin: 0px; padding: 0px ">
+    <img src="img/banniere.png" srcset="img/banniere2.png 1000w, img/banniere3.png 2500w" alt="ban">
 </div>
-
-
-
 
 
 <!--Dataviz-->
 <div style="background-color: #adadad" class="jumbotron">
     <!--Jauge, SVG, Selecteurs-->
-<div class="row" style="padding-bottom: 15px">
+    <div class="row" style="padding-bottom: 15px">
 
-    <div class="col-1" ></div>
-    <div class="col-10" >
-        <button id="random_affiche" class="btn btn-primary" style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une affiche au hasard</button>
+        <div class="col-1"></div>
+        <div class="col-10">
+            <button id="random_affiche" class="btn btn-primary"
+                    style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une
+                affiche au hasard
+            </button>
+        </div>
+        <div class="col-1"></div>
     </div>
-    <div class="col-1" ></div>
-</div>
     <div class="row">
 
         <!--Jauge-->
-        <div  class="col-1">
+        <div class="col-1">
             <div class="jumbotron">
                 <div class="center-block">
-                    <svg  id="barchart"></svg>
+                    <svg id="barchart"></svg>
                 </div>
             </div>
         </div>
 
         <!--SVG-->
-        <div  class="col-6">
+        <div class="col-6">
             <div class="affiche">
                 <svg width="640" height="833" id="svg"></svg>
             </div>
@@ -61,7 +61,7 @@
 
 
         <!--Selecteur-->
-        <div  class="col-5">
+        <div class="col-5">
 
             <!--Lieux-->
 
@@ -146,32 +146,43 @@
             <!--Titre-->
             <div class="jumbotron">
                 <h2 style="color: white">Titre (personnalisé ou mashup)</h2>
-
                 <div class="row">
-                    <div class="form-group col-8">
+<div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="refresh">Générer un titre</button>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="form-group col-10">
                         <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
 
 
                     </div>
 
-                    <div class="form-group  col-4">
+                    <div class="form-group  col-1">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-primary" id="place_text">Go</button>
                         </div>
                     </div>
-                </div>
-                <input id="color_picker" class="jscolor" value="cc66ff">
-
-
-                <div class="row">
-                    <div class="form-group  col-4">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary" id="refresh">Générer un titre</button>
-                        </div>
                     </div>
                 </div>
 
+
+
+
+
             </div>
+
+            <!--Couleur-->
+            <div class="jumbotron">
+                <h2 style="color: white">Couleur des écritures</h2>
+
+                <button type="button" id="color_picker" class="jscolor {valueElement:null,value:'66ccff'}"
+                        style="border:2px solid black">blblblblblbllblblbl
+                </button>
+
+            </div>
+
 
             <!--Génération-->
             <div class="jumbotron">
