@@ -29,8 +29,8 @@
 }
 
 @font-face {
-    font-family: 'J.J. Abrams';
-    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf') format('truetype');
+    font-family: 'Jeffrey Jacob Abrams';
+    src: url('../fonts/Abrams/Star Trek_future.ttf') format('truetype');
 }
 
 @font-face {
@@ -45,7 +45,7 @@
 
 @font-face {
     font-family: 'Luc Besson';
-    src: url('../fonts/Luc Besson/#######') format('truetype');
+    src: url('../fonts/Luc Besson/StarTrekEnterpriseFuture.ttf') format('truetype');
 }
 
 /* A VOUS DE CONTINUER ! */
