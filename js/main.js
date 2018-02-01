@@ -467,7 +467,7 @@ function draw_itsf(itsf_value) {
     // moves the 'group' element to the top left margin
     var svg = d3.select("#barchart")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom - 57)
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
