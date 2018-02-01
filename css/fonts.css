@@ -30,7 +30,7 @@
 
 @font-face {
     font-family: 'Jeffrey Jacob Abrams';
-    src: url('../fonts/Abrams/Star Trek_future.ttf') format('truetype');
+    src: url('../fonts/Abrams/DINTrek.ttf') format('truetype');
 }
 
 @font-face {
@@ -40,7 +40,8 @@
 
 @font-face {
     font-family: 'James Cameron';
-    src: url('../fonts/James Cameron/terminator real nfi.ttf') format('truetype');
+    font-size: 30px;
+    src: url('../fonts/James Cameron/PAPYRUS.ttf') format('truetype');
 }
 
 @font-face {
@@ -51,7 +52,7 @@
 /* A VOUS DE CONTINUER ! */
 
 #preview {
-    font-size: 40px;
+    font-size: 30px;
     cursor: move;
     color: #eee;
 }
