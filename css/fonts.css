@@ -30,12 +30,12 @@
 
 @font-face {
     font-family: 'J.J. Abrams';
-    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf') format('truetype');
+    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Ridley Scott';
-    src: url('../fonts/Ridley Scott/BLADRMF_ttf') format('truetype');
+    src: url('../fonts/Ridley Scott/BLADRMF_.TTF') format('truetype');
 }
 
 @font-face {
