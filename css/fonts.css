@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'Georges Romero';
-    src: url('../fonts/Georges Romero/Beware of the Zombies.ttf') format('truetype');
+    src: url('../fonts/Georges Romero/BewareoftheZombies.ttf') format('truetype');
 }
 
 @font-face {
@@ -30,12 +30,12 @@
 
 @font-face {
     font-family: 'J.J. Abrams';
-    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf) format('truetype');
+    src: url('../fonts/J.J. Abrams/Star Trek Enterprise Future.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Ridley Scott';
-    src: url('../fonts/Ridley Scott/BLADRMF_.TTF') format('truetype');
+    src: url('../fonts/Ridley Scott/BladeRunnerMovieFont.TTF') format('truetype');
 }
 
 @font-face {
@@ -44,7 +44,7 @@
 }
 
 @font-face {
-    font-family: 'Luc Besson';k
+    font-family: 'Luc Besson';
     src: url('../fonts/Luc Besson/#######') format('truetype');
 }
 
