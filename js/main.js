@@ -336,7 +336,7 @@ function update_picture() {
         font = "Arial";
     }
 
-    //sideinfos
+    //sideinfos1
     d3.select("#svg").append("text")
         .attr("x", 269)
         .attr("y", 35)
@@ -408,7 +408,17 @@ function update_picture() {
         .attr("text-anchor", "middle")
         .call(wrap, 300);
 
-
+//sideinfos1
+    d3.select("#svg").append("text")
+        .attr("x", 269)
+        .attr("y", 640)
+        .attr("id", "sideinfos_txt")
+        .text("Réalisé par :")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("align", "center1")
+        .attr("text-anchor", "middle")
     // Director
     $("#director_txt").remove();
 
