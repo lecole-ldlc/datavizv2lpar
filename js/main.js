@@ -2,11 +2,11 @@ function SVG(tag) {
     return document.createElementNS('http://www.w3.org/2000/svg', tag);
 }
 
-var font = "Arial";
+var font = "Roboto";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
-var title_pos = [269, 140];
+var title_pos = [269, 170];
 var actor_rot = {
     "1": 0,
     "2": 0,
@@ -28,8 +28,8 @@ var actor_pos = {
 };
 
 var actor_title_pos = {
-    "1": [269, 600],
-    "2": [269, 650]
+    "1": [140, 80],
+    "2": [400, 80]
 };
 
 function init() {
@@ -69,7 +69,7 @@ function wrap(text, width) {
             word,
             line = [],
             lineNumber = 0,
-            lineHeight = 1.0, // ems
+            lineHeight = 0.9, // ems
             y = text.attr("y"),
             dy = 0,
             tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
@@ -319,6 +319,7 @@ function random_affiche() {
 function update_picture() {
     $("#svg").html('');
 
+
     // Background
     var img = $("#places").val();
     if (img != "") {
@@ -335,6 +336,17 @@ function update_picture() {
         font = "Arial";
     }
 
+    //sideinfos1
+    d3.select("#svg").append("text")
+        .attr("x", 269)
+        .attr("y", 35)
+        .attr("id", "sideinfos_txt")
+        .text("La Planche à Repasser présente : ")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("align", "center1")
+        .attr("text-anchor", "middle")
     //actor 1
     var actor1_img = $("#actor_cb1 :selected").val();
     var actor1_name = $("#actor_cb1 option:selected").text();
@@ -396,13 +408,23 @@ function update_picture() {
         .attr("text-anchor", "middle")
         .call(wrap, 300);
 
-
+//sideinfos1
+    d3.select("#svg").append("text")
+        .attr("x", 269)
+        .attr("y", 640)
+        .attr("id", "sideinfos_txt")
+        .text("Réalisé par :")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("align", "center1")
+        .attr("text-anchor", "middle")
     // Director
     $("#director_txt").remove();
 
     d3.select("#svg").append("text")
-        .attr("x", 320)
-        .attr("y", 755)
+        .attr("x", 269)
+        .attr("y", 690)
         .text(txtdirect)
         .attr("id", "director_txt")
         .attr("class", "director_text color_text")
@@ -417,7 +439,7 @@ function update_picture() {
         d3.select(this).style("stroke", '#000');
     });
     update_itsf();
-    generatesideinfos();
+    generate_png();
 }
 
 var imageAnimation = new function () {
@@ -582,20 +604,8 @@ function draw_itsf(itsf_value) {
 
 
 }
-function generatesideinfos() {
-    d3.select("#svg").append("text")
-        .attr("x", 320)
-        .attr("y", 35)
-        .attr("id", "sideinfos_txt")
-        .text("La Planche à Repasser présente : ")
-        .attr("class", "color_text")
-        .attr("font-family", font)
-        .attr("font-size", "15px")
-        .attr("fill", "grey")
-        .attr("stroke", "#000")
-        .attr("align", "center1")
-        .attr("text-anchor", "middle")
-}
+
+
 function mouseenter() {
     d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
 }
