@@ -80,3 +80,7 @@ body{
 }
 
 .help {cursor: help;}
+
+#sideinfos_txt{
+    color: white;
+}

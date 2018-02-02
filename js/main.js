@@ -45,23 +45,10 @@ var directors = [];
 var actors = [];
 var places = [];
 
-function generatesideinfos() {
-    d3.select("#svg").append("text")
-        .attr("x", 320)
-        .attr("y", 35)
-        .attr("id", "sideinfos_txt")
-        .text("La Planche à Repasser présente : ")
-        .attr("class", "color_text")
-        .attr("font-family", font)
-        .attr("font-size", "15px")
-        .attr("fill", white)
-        .attr("align", "center")
-        .attr("text-anchor", "middle")
-        .style("fill", white)
-        .style("stroke", '#000');
 
 
-}
+
+
 
 function add_titles(a, title_start, title_end) {
     title_start.push(a.movie_title_start);
@@ -595,7 +582,20 @@ function draw_itsf(itsf_value) {
 
 
 }
-
+function generatesideinfos() {
+    d3.select("#svg").append("text")
+        .attr("x", 320)
+        .attr("y", 35)
+        .attr("id", "sideinfos_txt")
+        .text("La Planche à Repasser présente : ")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("fill", "grey")
+        .attr("stroke", "#000")
+        .attr("align", "center1")
+        .attr("text-anchor", "middle")
+}
 function mouseenter() {
     d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
 }

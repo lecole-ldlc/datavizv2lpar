@@ -1,112 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>Test Generate SVG</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>La Planche à Repasser</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
-    <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
-    <script type='text/javascript'></script>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <style>
-        svg {
-            margin-top: 10px;
-            border: 1px black solid;
-        }
-    </style>
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-colorpicker.css" rel="stylesheet">
 
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<!--Titre et description de la dv-->
+<div class="" style="margin: 0px; padding: 0px ">
+    <img src="img/banniere.png" srcset="img/banniere2.png 1000w, img/banniere3.png 2500w" alt="ban">
+</div>
 
-<div class="row">
-    <div class="col-2">
-    </div>
-    <div class="col-4">
-        <select id="directors" name="name-list">
 
-        </select>
+<!--Dataviz-->
+<div style="background-color: #adadad ; padding-top: 0px" class="jumbotron">
+    <!--Jauge, SVG, Selecteurs-->
+    <div class="row">
+
+        <div class="col-1"></div>
+        <div class="col-6">
+            <button id="random_affiche" class="btn btn-primary"
+                    style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une
+                affiche au hasard
+            </button>
+        </div>
+        <div class="col-5"></div>
     </div>
-    <div class="col-4">
-        <button id="place_direct" class="btn btn-primary">Valider</button>
+    <div class="row">
+
+        <!--Jauge-->
+        <div class="col-1">
+            <div class="jumbotron">
+                <div title="Mesure le pourcentage de sciencefictionnalité de ton film !" class="center-block help">
+                    <svg style="background-color: #7A7A7A" id="barchart"></svg>
+                </div>
+            </div>
+        </div>
+
+        <!--SVG-->
+        <div class="col-6">
+            <div class="affiche">
+                <svg width="640" height="833" id="svg" style="margin-top: 0"></svg>
+            </div>
+
+            <!--Synopsis
+            <div style="margin-top: 12px" class="jumbotron">
+                <h2 style="color: white">Synopsis
+
+                </h2>
+            </div> -->
+        </div>
+
+
+        <!--Selecteur-->
+        <div class="col-5">
+
+            <!--Lieux-->
+
+
+            <div class="jumbotron">
+                <h2 style="color: white">Lieux / Environnements</h2>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <select class="form-control" id="places" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un lieu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--Acteur1-->
+            <div class="jumbotron"><h2 style="color: white">Acteur 1</h2>
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control actor" id="actor_cb1" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un acteur</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="wheel1"><i class="fa fa-rotate-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="wheelccw1"><i
+                                    class="fa fa-rotate-right"></i></button>
+                            <button type="button" class="btn btn-primary" id="big1"><i class="fa fa-expand"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="small1"><i class="fa fa-compress"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Acteur2-->
+            <div class="jumbotron"><h2 style="color: white">Acteur 2</h2>
+                <div class="row">
+                    <div class="form-group col-8">
+                        <select class="form-control actor" id="actor_cb2" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un acteur</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="wheel2"><i class="fa fa-rotate-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="wheelccw2"><i
+                                    class="fa fa-rotate-right"></i></button>
+                            <button type="button" class="btn btn-primary" id="big2"><i class="fa fa-expand"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="small2"><i class="fa fa-compress"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Réalisateur-->
+            <div class="jumbotron"><h2 style="color: white">Réalisateur</h2>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <select class="form-control" id="directors" name="name-list">
+                            <option value="" data-sf="0">... Choisissez un réalisateur</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="preview">
+                </div>
+
+                <!--Preview-->
+
+
+            </div>
+
+            <!--Titre-->
+            <div class="jumbotron">
+                <h2 style="color: white">Titre (personnalisé ou mashup)</h2>
+                <div class="row">
+                    <div class="form-group  col-4">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="refresh">Générer un titre</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-8">
+                        <input class="form-control" type="text" id="title" placeholder="Votre titre ici">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!--Couleur-->
+            <div class="jumbotron">
+                <h2 style="color: white">Couleur des écritures</h2>
+                <input name="color2" type="hidden" id="color_picker" value="007bff">
+                <button type="button" class="jscolor {valueElement: 'color_picker'} btn btn-primary">Clique moi pour
+                    choisir la couleur
+                    des textes !
+                </button>
+
+            </div>
+
+
+            <!--Génération-->
+            <div class="jumbotron">
+                <div class="col-12">
+                    <!--Bouton-->
+                    <button id="myBtn" class="btn btn-primary">Générer l'affiche</button>
+                    <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <div class="row">
+                                <div class="col-6">
+                                    <svg id="svg"></svg>
+                                </div>
+                                <div class="col-6">
+                                    <div class="jumbotron">
+                                        <h2>Voilà ! Ton affiche est prête !</h2>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <svg width="150px">85%</svg>
+                                            </div>
+                                            <div class="col-6">
+                                                <p>Texte sur variable</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="jumbotron">
+                                        <h2>
+                                            Tu veux en faire quoi maintenant ?
+                                        </h2>
+                                        <p>partager</p>
+                                        <p>téléverser</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+<div id="preload" style="display: none;">
 
 </div>
-<div class="row">
-    <div class="col-2">
-    </div>
-    <div class="col-10">
-        <svg id="svg" width="600" height="880">
-        </svg>
-    </div>
-</div>
+
+
+<canvas id="canvas" width="538" height="700"></canvas>
+<div id="png-container"></div>
+
+
 <script>
-    function SVG(tag) {
-        return document.createElementNS('http://www.w3.org/2000/svg', tag);
-    }
-    var font = "Arial";
-    //import données depuis gsheet
-    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
+    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
 
-    function init() {
-        Tabletop.init({
-            key: publicSpreadsheetUrl,
-            callback: showInfo,
-            simpleSheet: true
-        })
-    }
-
-    function showInfo(data, tabletop) {
-        console.log('Successfully processed!')
-        console.log(data);
-
-
-        var directors = [];
-        data.forEach(function (d) {
-            if (d["type"] == "directors") {
-                directors.push(d);
-            }
-        });
-
-        var dropDown = d3.select("#directors");
-
-        var options = dropDown.selectAll("option")
-            .data(directors)
-            .enter()
-            .append("option")
-            .text(function (d) {
-                return d.elements;
-            })
-            .attr("value", function (d) {
-                return d.elements;
-
-            });
-        console.log(options);
-
-        $("#directors").on("change", function (e) {
-
-            console.log($(this).val());
-          var fonttitle = $("#fonts").val();
-
-        });
-
-        $("#place_direct").click(function () {
-            var txt = $("#directors").val();
-            $("#svg").html("");
-            var font = "sans-serif"
-            d3.select("svg").append("text")
-                .attr("x", 100)
-                .attr("y", 100)
-                .text(txt)
-                .attr("font-family", font)
-                .attr("font-size", "30px")
-        });
-
-    }
-    window.addEventListener('DOMContentLoaded', init);
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var DOMURL = self.URL || self.webkitURL || self;
+    var img = new Image();
+    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+    var url = DOMURL.createObjectURL(svg);
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        var png = canvas.toDataURL("image/png");
+        document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+        DOMURL.revokeObjectURL(png);
+    };
+    img.src = url;
+console.log(url);
 </script>
+
+
+<script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
+<script src="js/jscolor.js"></script>
+
+<script src="js/main.js"></script>
+
+<script src="js/modal.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script type='text/javascript'></script>
 </body>
+</html>
 </html>
