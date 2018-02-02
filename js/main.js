@@ -344,7 +344,7 @@ function update_picture() {
         .text("La Planche à Repasser présente : ")
         .attr("class", "color_text")
         .attr("font-family", font)
-        .attr("font-size", "15px")
+        .attr("font-size", "20px")
         .attr("align", "center1")
         .attr("text-anchor", "middle")
     //actor 1
