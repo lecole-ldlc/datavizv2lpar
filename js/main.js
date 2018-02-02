@@ -518,7 +518,7 @@ function draw_itsf(itsf_value) {
     // set the dimensions and margins of the graph
     var margin = {top: 20, right: 0, bottom: 0, left: 0},
         width = 50,
-        height = 833;
+        height = 700;
 
     // set the ranges
     var x = d3.scaleBand()

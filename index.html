@@ -22,19 +22,9 @@
 
 
 <!--Dataviz-->
-<div style="background-color: #adadad ; padding-top: 0px" class="jumbotron">
+<div style="background-color: #adadad ; padding-top: 10px" class="jumbotron">
     <!--Jauge, SVG, Selecteurs-->
-    <div class="row">
 
-        <div class="col-1"></div>
-        <div class="col-6">
-            <button id="random_affiche" class="btn btn-primary"
-                    style="margin-top: 10px;margin-bottom: 10px;margin-left: -50px; margin-right: -50px">Générer une
-                affiche au hasard
-            </button>
-        </div>
-        <div class="col-5"></div>
-    </div>
     <div class="row">
 
         <!--Jauge-->
@@ -63,6 +53,17 @@
 
         <!--Selecteur-->
         <div class="col-5">
+
+            <!--Lieux-->
+
+
+            <div class="jumbotron">
+                    <div class="form-group col-12 align-content-center" style="margin: 3px; padding-bottom: 10px">
+                         <button id="random_affiche" class="btn btn-primary" style="width: 470px ;align-self: center"                    >Générer une
+                affiche au hasard
+            </button>
+                    </div>
+            </div>
 
             <!--Lieux-->
 
@@ -163,7 +164,8 @@
             </div>
 
             <!--Couleur-->
-            <div class="jumbotron">
+            <div class="jumbotron" style="padding-bottom: 15px; padding-top: 15px">
+
                 <h2 style="color: white">Couleur des écritures</h2>
                 <input name="color2" type="hidden" id="color_picker" value="007bff">
                 <button type="button" class="jscolor {valueElement: 'color_picker'} btn btn-primary">Clique moi pour
@@ -175,7 +177,7 @@
 
 
             <!--Génération-->
-            <div class="jumbotron">
+            <div class="jumbotron" style="padding-bottom: 10px">
                 <div class="col-12">
                     <!--Bouton-->
                     <button id="myBtn" class="btn btn-primary">Générer l'affiche</button>

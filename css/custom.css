@@ -1,7 +1,10 @@
 .jumbotron {
     background-color: #000759;
     margin-bottom: 10px;
-    padding: 15px;
+    padding: 5px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
     box-shadow: inset -1px -1px 8px 2px #001223;
 }
 
@@ -17,6 +20,7 @@
 
 h2 {
     font-size: 20px;
+    padding-bottom: 0px;
 }
 
 /* The Modal (background) */
@@ -80,3 +84,8 @@ body{
 }
 
 .help {cursor: help;}
+
+.row{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
