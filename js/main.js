@@ -2,7 +2,7 @@ function SVG(tag) {
     return document.createElementNS('http://www.w3.org/2000/svg', tag);
 }
 
-var font = "Arial";
+var font = "Roboto";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
