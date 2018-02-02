@@ -6,7 +6,7 @@ var font = "Arial";
 //import données depuis gsheet
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1EtGVW0KmbFtQruyAgCMaFYFCcenqRsBLTgJcPwcsszc/edit?usp=sharing';
 
-var title_pos = [320, 140];
+var title_pos = [269, 140];
 var actor_rot = {
     "1": 0,
     "2": 0,
@@ -24,12 +24,12 @@ var actor_pos_init = {
 
 var actor_pos = {
     "1": [0, 400],
-    "2": [320, 400],
+    "2": [220, 400],
 };
 
 var actor_title_pos = {
-    "1": [320, 790],
-    "2": [320, 820]
+    "1": [269, 600],
+    "2": [269, 650]
 };
 
 function init() {
@@ -321,8 +321,8 @@ function update_picture() {
             .attr("xlink:href", img)
             .attr("x", "0")
             .attr("y", "0")
-            .attr("width", "640")
-            .attr("height", "833");
+            .attr("width", "538")
+            .attr("height", "700");
     }
 
     var font = $("#directors :selected").text();
