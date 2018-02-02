@@ -418,6 +418,7 @@ function update_picture() {
     });
     update_itsf();
     generatesideinfos();
+    generate_png();
 }
 
 var imageAnimation = new function () {

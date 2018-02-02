@@ -49,7 +49,7 @@
         <!--SVG-->
         <div class="col-6">
             <div class="affiche">
-                <svg width="640" height="833" id="svg" style="margin-top: 0"></svg>
+                <svg width="538" height="700" id="svg" style="margin-top: 0"></svg>
             </div>
 
             <!--Synopsis
@@ -185,18 +185,13 @@
                         <div class="modal-content">
                             <span class="close">&times;</span>
                             <div class="row">
-                                <div class="col-6">
-                                    <svg id="svg"></svg>
-                                </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="jumbotron">
                                         <h2>Voilà ! Ton affiche est prête !</h2>
                                         <div class="row">
-                                            <div class="col-6">
-                                                <svg width="150px">85%</svg>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Texte sur variable</p>
+                                            <div class="col-12">
+                                                <div id="png-container"></div>
+                                                <canvas style="display: none;" id="canvas" width="538" height="700"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -223,30 +218,6 @@
 </div>
 
 
-<canvas id="canvas" width="538" height="700"></canvas>
-<div id="png-container"></div>
-
-
-<script>
-    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    var DOMURL = self.URL || self.webkitURL || self;
-    var img = new Image();
-    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-    var url = DOMURL.createObjectURL(svg);
-    img.onload = function() {
-        ctx.drawImage(img, 0, 0);
-        var png = canvas.toDataURL("image/png");
-        document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
-        DOMURL.revokeObjectURL(png);
-    };
-    img.src = url;
-console.log(url);
-</script>
-
-
 <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src='js/bootstrap.bundle.min.js'></script>
@@ -257,6 +228,27 @@ console.log(url);
 <script src="js/modal.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'></script>
+<script>
+    function generate_png()
+    {
+        var svgString = new XMLSerializer().serializeToString(document.getElementById('svg'));
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var DOMURL = self.URL || self.webkitURL || self;
+        var img = new Image();
+        var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        var url = DOMURL.createObjectURL(svg);
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            var png = canvas.toDataURL("image/png");
+            document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+            DOMURL.revokeObjectURL(png);
+        };
+        img.src = url;
+        console.log(url);
+    }
+</script>
 </body>
 </html>
 </html>
