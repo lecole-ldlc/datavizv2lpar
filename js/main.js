@@ -319,6 +319,7 @@ function random_affiche() {
 function update_picture() {
     $("#svg").html('');
 
+
     // Background
     var img = $("#places").val();
     if (img != "") {
@@ -335,6 +336,17 @@ function update_picture() {
         font = "Arial";
     }
 
+    //sideinfos
+    d3.select("#svg").append("text")
+        .attr("x", 269)
+        .attr("y", 35)
+        .attr("id", "sideinfos_txt")
+        .text("La Planche à Repasser présente : ")
+        .attr("class", "color_text")
+        .attr("font-family", font)
+        .attr("font-size", "15px")
+        .attr("align", "center1")
+        .attr("text-anchor", "middle")
     //actor 1
     var actor1_img = $("#actor_cb1 :selected").val();
     var actor1_name = $("#actor_cb1 option:selected").text();
@@ -417,7 +429,6 @@ function update_picture() {
         d3.select(this).style("stroke", '#000');
     });
     update_itsf();
-    generatesideinfos();
     generate_png();
 }
 
@@ -583,20 +594,8 @@ function draw_itsf(itsf_value) {
 
 
 }
-function generatesideinfos() {
-    d3.select("#svg").append("text")
-        .attr("x", 320)
-        .attr("y", 35)
-        .attr("id", "sideinfos_txt")
-        .text("La Planche à Repasser présente : ")
-        .attr("class", "color_text")
-        .attr("font-family", font)
-        .attr("font-size", "15px")
-        .attr("fill", "grey")
-        .attr("stroke", "#000")
-        .attr("align", "center1")
-        .attr("text-anchor", "middle")
-}
+
+
 function mouseenter() {
     d3.select(this).style('stroke-width', '1px').style("fill", '#fff').style('cursor', 'move');
 }
